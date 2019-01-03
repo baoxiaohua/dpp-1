@@ -1,0 +1,79 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-system-query-heading">Create or edit a System Query</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!systemQuery.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="systemQuery.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_identifier">Identifier</label>
+                    <input type="text" class="form-control" name="identifier" id="field_identifier"
+                        [(ngModel)]="systemQuery.identifier" required maxlength="50"/>
+                    <div [hidden]="!(editForm.controls.identifier?.dirty && editForm.controls.identifier?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.identifier?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.identifier?.errors?.maxlength">
+                        This field cannot be longer than 50 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_definition">Definition</label>
+                    <input type="text" class="form-control" name="definition" id="field_definition"
+                        [(ngModel)]="systemQuery.definition" required maxlength="2000"/>
+                    <div [hidden]="!(editForm.controls.definition?.dirty && editForm.controls.definition?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.definition?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.definition?.errors?.maxlength">
+                        This field cannot be longer than 2000 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_roles">Roles</label>
+                    <input type="text" class="form-control" name="roles" id="field_roles"
+                        [(ngModel)]="systemQuery.roles" maxlength="50"/>
+                    <div [hidden]="!(editForm.controls.roles?.dirty && editForm.controls.roles?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.roles?.errors?.maxlength">
+                        This field cannot be longer than 50 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_createTs">Create Ts</label>
+                    <div class="d-flex">
+                        <input id="field_createTs" type="datetime-local" class="form-control" name="createTs" [(ngModel)]="createTs"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_updateTs">Update Ts</label>
+                    <div class="d-flex">
+                        <input id="field_updateTs" type="datetime-local" class="form-control" name="updateTs" [(ngModel)]="updateTs"
+                        />
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

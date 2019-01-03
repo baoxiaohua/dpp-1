@@ -1,0 +1,163 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-data-sub-processor-heading">Create or edit a Data Sub Processor</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!dataSubProcessor.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="dataSubProcessor.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dataProcessorId">Data Processor Id</label>
+                    <input type="number" class="form-control" name="dataProcessorId" id="field_dataProcessorId"
+                        [(ngModel)]="dataSubProcessor.dataProcessorId" required/>
+                    <div [hidden]="!(editForm.controls.dataProcessorId?.dirty && editForm.controls.dataProcessorId?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.dataProcessorId?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.dataProcessorId?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                        [(ngModel)]="dataSubProcessor.name" required maxlength="50"/>
+                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.name?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.name?.errors?.maxlength">
+                        This field cannot be longer than 50 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sequence">Sequence</label>
+                    <input type="number" class="form-control" name="sequence" id="field_sequence"
+                        [(ngModel)]="dataSubProcessor.sequence" required/>
+                    <div [hidden]="!(editForm.controls.sequence?.dirty && editForm.controls.sequence?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.sequence?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.sequence?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dataProcessorType">Data Processor Type</label>
+                    <select class="form-control" name="dataProcessorType" [(ngModel)]="dataSubProcessor.dataProcessorType" id="field_dataProcessorType"  required>
+                        <option value="SQL_INTERIM">SQL_INTERIM</option>
+                        <option value="SQL_DB">SQL_DB</option>
+                        <option value="CODE_GROOVY">CODE_GROOVY</option>
+                        <option value="SQL_KYLIN">SQL_KYLIN</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.dataProcessorType?.dirty && editForm.controls.dataProcessorType?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.dataProcessorType?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_code">Code</label>
+                    <textarea class="form-control" name="code" id="field_code"
+                        [(ngModel)]="dataSubProcessor.code" ></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_parameter">Parameter</label>
+                    <textarea class="form-control" name="parameter" id="field_parameter"
+                        [(ngModel)]="dataSubProcessor.parameter" ></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_outputAsTable">Output As Table</label>
+                    <input type="checkbox" class="form-control" name="outputAsTable" id="field_outputAsTable"
+                        [(ngModel)]="dataSubProcessor.outputAsTable" />
+                    <div [hidden]="!(editForm.controls.outputAsTable?.dirty && editForm.controls.outputAsTable?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.outputAsTable?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_outputAsObject">Output As Object</label>
+                    <input type="checkbox" class="form-control" name="outputAsObject" id="field_outputAsObject"
+                        [(ngModel)]="dataSubProcessor.outputAsObject" />
+                    <div [hidden]="!(editForm.controls.outputAsObject?.dirty && editForm.controls.outputAsObject?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.outputAsObject?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_outputAsResult">Output As Result</label>
+                    <input type="checkbox" class="form-control" name="outputAsResult" id="field_outputAsResult"
+                        [(ngModel)]="dataSubProcessor.outputAsResult" />
+                    <div [hidden]="!(editForm.controls.outputAsResult?.dirty && editForm.controls.outputAsResult?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.outputAsResult?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_createTs">Create Ts</label>
+                    <div class="d-flex">
+                        <input id="field_createTs" type="datetime-local" class="form-control" name="createTs" [(ngModel)]="createTs"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_createBy">Create By</label>
+                    <input type="text" class="form-control" name="createBy" id="field_createBy"
+                        [(ngModel)]="dataSubProcessor.createBy" maxlength="50"/>
+                    <div [hidden]="!(editForm.controls.createBy?.dirty && editForm.controls.createBy?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.createBy?.errors?.maxlength">
+                        This field cannot be longer than 50 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_updateTs">Update Ts</label>
+                    <div class="d-flex">
+                        <input id="field_updateTs" type="datetime-local" class="form-control" name="updateTs" [(ngModel)]="updateTs"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_updateBy">Update By</label>
+                    <input type="text" class="form-control" name="updateBy" id="field_updateBy"
+                        [(ngModel)]="dataSubProcessor.updateBy" maxlength="50"/>
+                    <div [hidden]="!(editForm.controls.updateBy?.dirty && editForm.controls.updateBy?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.updateBy?.errors?.maxlength">
+                        This field cannot be longer than 50 characters.
+                        </small>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

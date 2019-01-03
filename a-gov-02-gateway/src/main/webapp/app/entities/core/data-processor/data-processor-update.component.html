@@ -1,0 +1,130 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-data-processor-heading">Create or edit a Data Processor</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!dataProcessor.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="dataProcessor.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nameSpace">Name Space</label>
+                    <input type="text" class="form-control" name="nameSpace" id="field_nameSpace"
+                        [(ngModel)]="dataProcessor.nameSpace" required maxlength="50"/>
+                    <div [hidden]="!(editForm.controls.nameSpace?.dirty && editForm.controls.nameSpace?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.nameSpace?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.nameSpace?.errors?.maxlength">
+                        This field cannot be longer than 50 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_identifier">Identifier</label>
+                    <input type="text" class="form-control" name="identifier" id="field_identifier"
+                        [(ngModel)]="dataProcessor.identifier" required maxlength="50"/>
+                    <div [hidden]="!(editForm.controls.identifier?.dirty && editForm.controls.identifier?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.identifier?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.identifier?.errors?.maxlength">
+                        This field cannot be longer than 50 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                        [(ngModel)]="dataProcessor.name" required maxlength="50"/>
+                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.name?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.name?.errors?.maxlength">
+                        This field cannot be longer than 50 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_state">State</label>
+                    <select class="form-control" name="state" [(ngModel)]="dataProcessor.state" id="field_state" >
+                        <option value="DRAFT">DRAFT</option>
+                        <option value="ENABLED">ENABLED</option>
+                        <option value="DISABLED">DISABLED</option>
+                        <option value="ERROR">ERROR</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_restApi">Rest Api</label>
+                    <input type="checkbox" class="form-control" name="restApi" id="field_restApi"
+                        [(ngModel)]="dataProcessor.restApi" />
+                    <div [hidden]="!(editForm.controls.restApi?.dirty && editForm.controls.restApi?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.restApi?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_createTs">Create Ts</label>
+                    <div class="d-flex">
+                        <input id="field_createTs" type="datetime-local" class="form-control" name="createTs" [(ngModel)]="createTs"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_createBy">Create By</label>
+                    <input type="text" class="form-control" name="createBy" id="field_createBy"
+                        [(ngModel)]="dataProcessor.createBy" maxlength="50"/>
+                    <div [hidden]="!(editForm.controls.createBy?.dirty && editForm.controls.createBy?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.createBy?.errors?.maxlength">
+                        This field cannot be longer than 50 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_updateTs">Update Ts</label>
+                    <div class="d-flex">
+                        <input id="field_updateTs" type="datetime-local" class="form-control" name="updateTs" [(ngModel)]="updateTs"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_updateBy">Update By</label>
+                    <input type="text" class="form-control" name="updateBy" id="field_updateBy"
+                        [(ngModel)]="dataProcessor.updateBy" maxlength="50"/>
+                    <div [hidden]="!(editForm.controls.updateBy?.dirty && editForm.controls.updateBy?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.updateBy?.errors?.maxlength">
+                        This field cannot be longer than 50 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_deleted">Deleted</label>
+                    <input type="checkbox" class="form-control" name="deleted" id="field_deleted"
+                        [(ngModel)]="dataProcessor.deleted" />
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

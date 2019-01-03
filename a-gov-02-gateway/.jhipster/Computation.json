@@ -1,0 +1,66 @@
+{
+    "name": "Computation",
+    "fields": [
+        {
+            "fieldName": "identifier",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "unique",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 50
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "unique",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 50
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "ComputationType",
+            "fieldValues": "KYLIN_SQL"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "ComputationStatus",
+            "fieldValues": "DRAFT,ACTIVE,ERROR"
+        },
+        {
+            "fieldName": "remark",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "createTs",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "updateTs",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "computationGroupId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "deleted",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20181114080117",
+    "entityTableName": "computation",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "microserviceName": "core"
+}

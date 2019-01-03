@@ -1,0 +1,72 @@
+{
+  "home": "主页",
+  "update": "编辑",
+  "save": "保存",
+  "create": "新建",
+  "execute": "运行",
+  "list": "列表",
+
+  "ambari-admin": "Ambari控制台",
+  "nifi-admin": "Nifi控制台",
+  "kylin-admin": "Kylin控制台",
+  "hdp-admin": "HDP日志",
+
+  "data-processor": "数据处理",
+  "data-processor.list": "数据处理列表",
+  "nameSpace": "命名空间",
+  "name": "名称",
+  "state": "状态",
+
+
+
+
+  "passport.title": "AEPMS",
+  "passport.subtitle": "工艺院智造管理监控云平台",
+  "passport.login.title": "登陆",
+  "passport.login.username.placeholder": "用户名",
+  "passport.login.password.placeholder": "密码",
+  "passport.login.autoLogin": "自动登录",
+  "passport.login.forgetPassword": "忘记密码",
+  "passport.login.forgetPassword.message": "请联系{{contact}}！",
+  "passport.login.submit": "登录",
+  "passport.login.username.error": "请输入账户名且至少五个字符！",
+  "passport.login.password.error": "请输入密码！",
+
+  "menu.fullscreen": "全屏",
+  "menu.fullscreen.exit": "退出全屏",
+  "menu.clear.local.storage": "清理本地缓存",
+  "menu.lang": "语言",
+
+  "menu.dashboard": "仪表盘",
+  "menu.computation": "计算管理",
+  "menu.computation.mgt": "计算管理",
+  "menu.computation-group.mgt": "计算组管理",
+
+  "menu.sys-query.mgt": "系统查询管理",
+  "menu.sys-query.list": "系统查询列表",
+
+  "title.home": "主页",
+  "title.dashboard": "仪表盘",
+  "title.computation-group": "计算组",
+
+  "title.sys-query": "系统查询",
+
+  "close": "关闭",
+  "back": "回退",
+  "reload": "刷新",
+
+  "search": "搜索",
+  "reset": "重置",
+  "add": "添加",
+  "export": "导出",
+  "delete": "删除",
+  "edit": "编辑",
+  "view": "查看",
+
+  "seq": "序号",
+  "identifier": "标识符",
+  "role": "角色",
+  "createTs": "创建时间",
+  "updateTs": "更新时间",
+  "operation": "操作"
+}

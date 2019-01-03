@@ -1,0 +1,90 @@
+<page-header [title]="null" [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <div nz-row>
+      <nz-col nzSpan="16">
+          <nz-breadcrumb>
+            <nz-breadcrumb-item>
+              <a [routerLink]="['/']">{{'home'|translate}}</a>
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+              <a [routerLink]="['/data-processor/list']">{{'data-processor.list'|translate}}</a>
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>{{'edit'|translate}}</nz-breadcrumb-item>
+          </nz-breadcrumb>
+      </nz-col>
+      <nz-col nzSpan="8" style="text-align: right;">
+        <button nz-button nzType="dashed" nzSize="small" (click)="close()">
+          <i nz-icon type="close" theme="outline"></i>
+        </button>
+        <button nz-button nzType="dashed" nzSize="small" (click)="goToPrevious()">
+          <i nz-icon type="arrow-left" theme="outline"></i>
+        </button>
+        <button nz-button nzType="dashed" nzSize="small" (click)="loadPage()">
+          <i nz-icon type="reload" theme="outline"></i>
+        </button>
+      </nz-col>
+    </div>
+  </ng-template>
+</page-header>
+
+<div nz-row nzGutter="16">
+  <nz-col nzXs="12" nzSm="12" nzMd="8" nzLg="8" nzXl="8" nzXXl="6">
+    <nz-card nzBordered="true" nzTitle="基本信息" class="content-card-fix-height">
+      <nz-spin [nzSpinning]="dataProcessorLoading">
+        <sf #dataProcessorSf mode="edit" [schema]="dataProcessorSchema" [ui]="dataProcessorUI" [formData]="dataProcessor" (formSubmit)="submitDataProcessor($event)" class="compact-form button-right">
+        </sf>
+      </nz-spin>
+      <nz-divider></nz-divider>
+      <nz-spin [nzSpinning]="dataSubProcessorListLoading">
+        <st #dataSubProcessorSt [data]="dataSubProcessorList" [header]="dataSubProcessorStHeader" [columns]="dataSubProcessorColumns"
+          [ps]="100" [page]="{show: false}" size="small" class="st-no-col-header">
+          <ng-template #dataSubProcessorStHeader>
+            <div>
+                <label class="sub-header">子处理列表</label>
+                <button nz-button nzSize="small" nz-tooltip nzTitle="{{'create'|translate}}" nzPlacement="bottom" (click)="addSubProcessor()" style="float:right;">
+                  <i nz-icon type="plus" theme="outline"></i>
+                </button>
+            </div>
+          </ng-template>
+        </st>
+        <!-- <div style="text-align: right; margin-top: 7px;">
+          <button nzType="primary" nz-button (click)="saveSubDataProcessorSequence()">{{"save"|translate}}</button>
+          <button nzType="primary" nz-button (click)="addSubProcessor()">{{"create"|translate}}</button>
+        </div> -->
+      </nz-spin>
+    </nz-card>
+  </nz-col>
+  <nz-col nzXs="12" nzSm="12" nzMd="8" nzLg="8" nzXl="8" nzXXl="6">
+    <nz-card nzBordered="true" [nzTitle]="'子处理信息 - ' + (!dataSubProcessor.id?'新建':'编辑')" class="content-card-fix-height">
+      <nz-spin [nzSpinning]="dataSubProcessorLoading">
+        <sf #dataSubProcessorSf mode="edit" [schema]="dataSubProcessorSchema" [ui]="dataSubProcessorUI" [formData]="dataSubProcessor" [button]="null" (formSubmit)="submitDataSubProcessor($event)" class="compact-form button-right">
+        </sf>
+        <st #parameterSt [data]="[{type:'数字', name: 'year', value: '2017', optional: true }]" [columns]="parameterColumn"
+          [ps]="100" [page]="{show: false}" size="small">
+          <!-- <ng-template #parameterStHeader>
+            <div>
+                <label class="sub-header">参数列表</label>
+                <button nz-button nzSize="small" nz-tooltip nzTitle="{{'create'|translate}}" nzPlacement="bottom" (click)="addSubProcessor()" style="float:right;">
+                  <i nz-icon type="plus" theme="outline"></i>
+                </button>
+            </div>
+          </ng-template> -->
+        </st>
+        <div style="text-align: right; margin-top: 7px;">
+          <button nzType="primary" nz-button (click)="submitSubDataProcessor()" [disabled]="!dataSubProcessorSf.valid">{{"execute"|translate}}</button>
+          <button nzType="primary" nz-button (click)="submitSubDataProcessor()" [disabled]="!dataSubProcessorSf.valid">{{"save"|translate}}</button>
+          <button nzType="default" nz-button (click)="resetSubDataProcessor()">{{"reset"|translate}}</button>
+        </div>
+      </nz-spin>
+    </nz-card>
+  </nz-col>
+  <nz-col nzXs="24" nzSm="24" nzMd="8" nzLg="8" nzXl="8" nzXXl="12">
+    <nz-card nzBordered="true" class="content-card-fix-height-no-header content-card-no-padding">
+      <nz-tabset [nzSize]="'small'" class="tab-bar">
+        <nz-tab nzTitle="代码">
+          <ngx-codemirror [(ngModel)]="dataSubProcessor.code" [config]="cmOptions" (change)="onCodeChange()"></ngx-codemirror>
+        </nz-tab>
+      </nz-tabset>
+    </nz-card>
+  </nz-col>
+</div>

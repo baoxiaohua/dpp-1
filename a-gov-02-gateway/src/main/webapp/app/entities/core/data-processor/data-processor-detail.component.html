@@ -1,0 +1,63 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="dataProcessor">
+            <h2><span>Data Processor</span> {{dataProcessor.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name Space</span></dt>
+                <dd>
+                    <span>{{dataProcessor.nameSpace}}</span>
+                </dd>
+                <dt><span>Identifier</span></dt>
+                <dd>
+                    <span>{{dataProcessor.identifier}}</span>
+                </dd>
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{dataProcessor.name}}</span>
+                </dd>
+                <dt><span>State</span></dt>
+                <dd>
+                    <span>{{dataProcessor.state}}</span>
+                </dd>
+                <dt><span>Rest Api</span></dt>
+                <dd>
+                    <span>{{dataProcessor.restApi}}</span>
+                </dd>
+                <dt><span>Create Ts</span></dt>
+                <dd>
+                    <span>{{dataProcessor.createTs}}</span>
+                </dd>
+                <dt><span>Create By</span></dt>
+                <dd>
+                    <span>{{dataProcessor.createBy}}</span>
+                </dd>
+                <dt><span>Update Ts</span></dt>
+                <dd>
+                    <span>{{dataProcessor.updateTs}}</span>
+                </dd>
+                <dt><span>Update By</span></dt>
+                <dd>
+                    <span>{{dataProcessor.updateBy}}</span>
+                </dd>
+                <dt><span>Deleted</span></dt>
+                <dd>
+                    <span>{{dataProcessor.deleted}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/data-processor', dataProcessor.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

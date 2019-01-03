@@ -1,0 +1,50 @@
+{
+  "app": {
+    "name": "数据处理平台",
+    "description": "数据处理平台",
+    "gatewayUrl": "http://localhost:8080"
+  },
+  "user": {
+    "name": "Admin",
+    "avatar": "./assets/tmp/img/avatar.jpg",
+    "email": "cipchk@qq.com"
+  },
+  "menu": [
+    {
+      "group": false,
+      "hideInBreadcrumb": true,
+      "children": [
+        {
+          "i18n": "menu.dashboard",
+          "link": "/dashboard",
+          "icon": "anticon anticon-dashboard"
+        },
+        {
+          "i18n": "ambari-admin",
+          "icon": "anticon anticon-appstore",
+          "link": "/data-processor/list1"
+        },
+        {
+          "i18n": "nifi-admin",
+          "icon": "anticon anticon-appstore",
+          "link": "/data-processor/list2"
+        },
+        {
+          "i18n": "kylin-admin",
+          "icon": "anticon anticon-appstore",
+          "link": "/data-processor/list3"
+        },
+        {
+          "i18n": "hdp-log-admin",
+          "icon": "anticon anticon-appstore",
+          "link": "/data-processor/list4"
+        },
+        {
+          "i18n": "data-processor",
+          "icon": "anticon anticon-appstore",
+          "link": "/data-processor/list"
+        }
+      ]
+    }
+  ]
+}

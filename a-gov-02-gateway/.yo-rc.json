@@ -1,0 +1,33 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.hh.sd.gateway"
+    },
+    "jhipsterVersion": "5.7.0",
+    "applicationType": "gateway",
+    "baseName": "gateway",
+    "packageName": "com.hh.sd.gateway",
+    "packageFolder": "com/hh/sd/gateway",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": "kafka",
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "NmQ0NmY0ODA1ODQxMGU2ZTQ1ZTc0YTc1NTM5NTZkYjUzMzJjZDBiNzRiZjFkMTc1YjgwZWZiYTkxNmE0YjVlYTU5ZTU4NTkxYjllNGIwMjE2N2FjOGY4NGVhMTJmZjIxOGJkNTliMGJmMTRhNjY1ZDY4ZWQzYTk2MjU4NzQxMzE=",
+    "clientFramework": "angularX",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "otherModules": [],
+    "enableTranslation": false
+  }
+}

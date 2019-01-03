@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity DataProcessor.
+    -->
+    <changeSet id="20181218140921-1" author="jhipster">
+        <createTable tableName="data_processor">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name_space" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="identifier" type="varchar(50)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_data_processor_identifier" />
+            </column>
+
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="state" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="rest_api" type="boolean">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="create_ts" type="datetime">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="create_by" type="varchar(50)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="update_ts" type="datetime">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="update_by" type="varchar(50)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="deleted" type="boolean">
+                <constraints nullable="true" />
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+        <dropDefaultValue tableName="data_processor" columnName="create_ts" columnDataType="datetime"/>
+        <dropDefaultValue tableName="data_processor" columnName="update_ts" columnDataType="datetime"/>
+        
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+</databaseChangeLog>

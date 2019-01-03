@@ -1,0 +1,20 @@
+<page-header [title]="headerTitle" [autoBreadcrumb]='true' [recursiveBreadcrumb]='true' [homeI18n]="'title.home'" [action]="action">
+  <ng-template #action>
+    <button nz-button nzType="dashed" nzSize="small" nz-tooltip nzTitle="关闭" nzPlacement="bottom" (click)="close()">
+        <i nz-icon type="close" theme="outline"></i>
+      </button>
+    <button nz-button nzType="dashed" nzSize="small" nz-tooltip nzTitle="回退" nzPlacement="bottom" (click)="goToPrevious()">
+      <i nz-icon type="arrow-left" theme="outline"></i>
+    </button>
+    <button nz-button nzType="dashed" nzSize="small" nz-tooltip nzTitle="刷新" nzPlacement="bottom" (click)="loadPage()">
+      <i nz-icon type="reload" theme="outline"></i>
+    </button>
+  </ng-template>
+</page-header>
+
+<nz-card nzBordered="false" class="content-card-min-height" style='padding:0;'>
+  <!-- <ngx-codemirror [(ngModel)]="code" [config]="cmOptions">
+  </ngx-codemirror> -->
+</nz-card>
+
+

@@ -1,0 +1,33 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.hh.sd.core"
+    },
+    "jhipsterVersion": "5.7.0",
+    "applicationType": "microservice",
+    "baseName": "core",
+    "packageName": "com.hh.sd.core",
+    "packageFolder": "com/hh/sd/core",
+    "serverPort": "8081",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": "kafka",
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ZGU5NmU1MGNlZmU4MzBlZWI4NTQ5NzNhZDgxNWUyNThkMjg4N2Y1M2FlZTA2MDc2ODgxZThiNzUwYmU4ZTI2YjQ2OWVkNDE0Y2QwZjdhMzY0NWE5YjRhYjJmNzk1NGIzNWU5Yzg4ZTg5Y2MzY2EzZmI5ZDRmMDMyMGZlMzYwYjA=",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "otherModules": [],
+    "enableTranslation": false,
+    "clientPackageManager": "npm",
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}
