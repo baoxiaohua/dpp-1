@@ -1,0 +1,8 @@
+<!-- <div style="padding: 5px; overflow: auto;">
+  <st #resultSt [data]="stData" [columns]="resultStColumn"
+    [ps]="100" [page]="{show: false}" size="small">
+  </st>
+  <textarea nz-input [ngModel]="resultJson" readonly></textarea>
+</div> -->
+
+<ngx-codemirror [(ngModel)]="resultJson" [config]="cmOptions"></ngx-codemirror>

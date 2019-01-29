@@ -1,0 +1,28 @@
+{
+    "name": "DataProcessorParameter",
+    "fields": [
+        {
+            "fieldName": "dataProcessorId",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "json",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190120012546",
+    "entityTableName": "data_processor_parameter",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "clientRootFolder": "core",
+    "applications": "*",
+    "microserviceName": "core"
+}
