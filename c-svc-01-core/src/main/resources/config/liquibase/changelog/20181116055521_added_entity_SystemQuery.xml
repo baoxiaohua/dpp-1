@@ -25,7 +25,7 @@
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_system_query_identifier" />
             </column>
 
-            <column name="definition" type="varchar(2000)">
+            <column name="definition" type="varchar(4000)">
                 <constraints nullable="false" />
             </column>
 

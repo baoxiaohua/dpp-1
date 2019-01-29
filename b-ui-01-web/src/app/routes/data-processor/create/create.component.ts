@@ -5,6 +5,8 @@ import { SFSchema, SFUISchema, SFComponent } from '@delon/form';
 import { DataProcessorService } from 'app/service/core/data-processor.service';
 import { IDataProcessor, State } from 'app/model/core/data-processor.model';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-data-processor-create',
   templateUrl: './create.component.html',
@@ -41,6 +43,8 @@ export class DataProcessorCreateComponent implements OnInit {
     this.loading = true;
     formData.state = State.DRAFT;
     formData.restApi = false;
+    formData.createTs = moment(Date.now());
+    formData.updateTs = moment(Date.now());
     this.dataProcessorService.create(formData).subscribe(resp => {
       this.loading = false;
       this.msgSrv.success('保存成功');

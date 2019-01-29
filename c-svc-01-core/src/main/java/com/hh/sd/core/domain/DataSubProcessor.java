@@ -49,10 +49,6 @@ public class DataSubProcessor implements Serializable {
     @Column(name = "code")
     private String code;
 
-    @Lob
-    @Column(name = "parameter")
-    private String parameter;
-
     @NotNull
     @Column(name = "output_as_table", nullable = false)
     private Boolean outputAsTable;
@@ -151,19 +147,6 @@ public class DataSubProcessor implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getParameter() {
-        return parameter;
-    }
-
-    public DataSubProcessor parameter(String parameter) {
-        this.parameter = parameter;
-        return this;
-    }
-
-    public void setParameter(String parameter) {
-        this.parameter = parameter;
     }
 
     public Boolean isOutputAsTable() {
@@ -287,7 +270,6 @@ public class DataSubProcessor implements Serializable {
             ", sequence=" + getSequence() +
             ", dataProcessorType='" + getDataProcessorType() + "'" +
             ", code='" + getCode() + "'" +
-            ", parameter='" + getParameter() + "'" +
             ", outputAsTable='" + isOutputAsTable() + "'" +
             ", outputAsObject='" + isOutputAsObject() + "'" +
             ", outputAsResult='" + isOutputAsResult() + "'" +

@@ -11,6 +11,7 @@
     <include file="config/liquibase/changelog/20181116055521_added_entity_SystemQuery.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181218140921_added_entity_DataProcessor.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181218140922_added_entity_DataSubProcessor.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190120012546_added_entity_DataProcessorParameter.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

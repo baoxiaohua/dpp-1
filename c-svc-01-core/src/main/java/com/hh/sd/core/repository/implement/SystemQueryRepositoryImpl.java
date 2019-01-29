@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.StopWatch;
 
 import javax.persistence.EntityManager;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+@Repository
 public class SystemQueryRepositoryImpl {
     private final Logger log = LoggerFactory.getLogger(SystemQueryRepositoryImpl.class);
 
@@ -56,8 +58,10 @@ public class SystemQueryRepositoryImpl {
     }
 
     private String getCountQuery(QueryModel queryModel) {
-        return "select count("+queryModel.getCountColumn()+") from "
-            + (queryModel.getQuery().split("(?i)FROM"))[1];
+
+        return "SELECT COUNT(*) FROM ("+queryModel.getQuery()+") TMP_TBL_COUNT";
+//        return "select count("+queryModel.getCountColumn()+") from "
+//            + ((queryModel.getQuery().split("(?i)SELECT"))[1]).split("(?i)FROM")[1];
     }
 
     private String getSortClause(Pageable pageable) {

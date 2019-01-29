@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { _HttpClient } from '@delon/theme';
+import { _HttpClient, TitleService } from '@delon/theme';
 import { BasePageComponent } from '@shared/base-page/base-page.component';
 import { BasePageInterface } from '@shared/base-page/base-page.interface';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -25,17 +25,40 @@ import { LayoutService } from 'app/service/layout.service';
 export class DashboardComponent extends BasePageComponent
   implements OnInit, BasePageInterface {
 
-  code = '';
-  cmOptions: any = {
-    lineNumbers: true,
-    mode: { name: 'text/x-pgsql' },
-    theme: 'dracula',
-    gutters: ['CodeMirror-lint-markers'],
-    lint: true,
-    extraKeys: {
-      Tab: 'autocomplete',
+    code = '';
+    cmOptions: any = {
+      lineNumbers: true,
+      mode: { name: 'text/x-pgsql' },
+      theme: 'dracula',
+      gutters: ['CodeMirror-lint-markers'],
+      lint: true,
+      extraKeys: {
+        Tab: 'autocomplete',
+      }
+    };
+
+    startValue;
+    endValue;
+
+    disabledStartDate = (startValue: Date): boolean => {
+      if (!startValue || !this.endValue) {
+        return false;
+      }
+      console.log(startValue.getTime());
+      return startValue.getTime() >= this.endValue.getTime();
     }
-  };
+
+    disabledEndDate = (endValue: Date): boolean => {
+      if (!endValue || !this.startValue) {
+        return false;
+      }
+      return endValue.getTime() <= this.startValue.getTime();
+    }
+
+
+
+
+
 
   constructor(
     router: Router,
@@ -43,16 +66,19 @@ export class DashboardComponent extends BasePageComponent
     reuseTabService: ReuseTabService,
     eventBusService: EventBusService,
     translateService: TranslateService,
+    titleService: TitleService,
     private layoutService: LayoutService,
     private systemQueryCustomService: SystemQueryCustomService,
     private systemQueryService: SystemQueryService,
     // private _codeMirror: CodemirrorService,
   ) {
-    super(router, activatedRoute, reuseTabService, eventBusService, translateService);
+    super(router, activatedRoute, reuseTabService, eventBusService, translateService, titleService);
   }
 
   ngOnInit() {
     super.ngOnInit();
+
+    this.setTitle('仪表盘', null);
     // this._codeMirror.instance$.subscribe((editor) => {
     //   editor.setSize('100%', this.layoutService.contentHeight);
     //   console.log(editor);

@@ -15,5 +15,5 @@ import java.util.List;
 @Repository
 public interface DataSubProcessorCustomRepository extends JpaRepository<DataSubProcessor, Long>, JpaSpecificationExecutor<DataSubProcessor> {
 
-    List<DataSubProcessor> findByDataProcessorId(Long dataProcessorId);
+    List<DataSubProcessor> findByDataProcessorIdOrderBySequenceAsc(Long dataProcessorId);
 }

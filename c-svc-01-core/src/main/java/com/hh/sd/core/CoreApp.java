@@ -3,6 +3,7 @@ package com.hh.sd.core;
 import com.hh.sd.core.config.ApplicationProperties;
 import com.hh.sd.core.config.DefaultProfileUtil;
 
+import com.hh.sd.core.utility.SpringContextUtility;
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
@@ -63,7 +65,10 @@ public class CoreApp {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(CoreApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
-        Environment env = app.run(args).getEnvironment();
+
+        ApplicationContext applicationContext = app.run(args);
+        SpringContextUtility.setApplicationContext(applicationContext);
+        Environment env = applicationContext.getEnvironment();
         logApplicationStartup(env);
     }
 

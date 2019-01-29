@@ -38,11 +38,6 @@
             "fieldTypeBlobContent": "text"
         },
         {
-            "fieldName": "parameter",
-            "fieldType": "byte[]",
-            "fieldTypeBlobContent": "text"
-        },
-        {
             "fieldName": "outputAsTable",
             "fieldType": "Boolean",
             "fieldValidateRules": [

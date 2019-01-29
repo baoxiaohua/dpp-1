@@ -18,7 +18,7 @@
                 "required",
                 "maxlength"
             ],
-            "fieldValidateRulesMaxlength": 2000
+            "fieldValidateRulesMaxlength": 4000
         },
         {
             "fieldName": "roles",

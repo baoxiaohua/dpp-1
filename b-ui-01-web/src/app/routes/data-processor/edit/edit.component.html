@@ -29,62 +29,111 @@
 
 <div nz-row nzGutter="16">
   <nz-col nzXs="12" nzSm="12" nzMd="8" nzLg="8" nzXl="8" nzXXl="6">
-    <nz-card nzBordered="true" nzTitle="基本信息" class="content-card-fix-height">
-      <nz-spin [nzSpinning]="dataProcessorLoading">
-        <sf #dataProcessorSf mode="edit" [schema]="dataProcessorSchema" [ui]="dataProcessorUI" [formData]="dataProcessor" (formSubmit)="submitDataProcessor($event)" class="compact-form button-right">
-        </sf>
-      </nz-spin>
-      <nz-divider></nz-divider>
-      <nz-spin [nzSpinning]="dataSubProcessorListLoading">
-        <st #dataSubProcessorSt [data]="dataSubProcessorList" [header]="dataSubProcessorStHeader" [columns]="dataSubProcessorColumns"
-          [ps]="100" [page]="{show: false}" size="small" class="st-no-col-header">
-          <ng-template #dataSubProcessorStHeader>
-            <div>
-                <label class="sub-header">子处理列表</label>
-                <button nz-button nzSize="small" nz-tooltip nzTitle="{{'create'|translate}}" nzPlacement="bottom" (click)="addSubProcessor()" style="float:right;">
-                  <i nz-icon type="plus" theme="outline"></i>
-                </button>
-            </div>
-          </ng-template>
-        </st>
-        <!-- <div style="text-align: right; margin-top: 7px;">
-          <button nzType="primary" nz-button (click)="saveSubDataProcessorSequence()">{{"save"|translate}}</button>
-          <button nzType="primary" nz-button (click)="addSubProcessor()">{{"create"|translate}}</button>
-        </div> -->
-      </nz-spin>
-    </nz-card>
+    <nz-spin [nzSpinning]="dataProcessorLoading">
+      <nz-card nzBordered="true" nzTitle="基本信息" class="content-card-no-height" [nzActions]="[dataProcessorSfSave,dataProcessorSfReset]">
+        <div style="height: 190px;">
+          <sf #dataProcessorSf mode="edit" [schema]="dataProcessorSchema" [ui]="dataProcessorUI" [formData]="dataProcessor" [button]="null" class="compact-form button-right">
+          </sf>
+        </div>
+      </nz-card>
+    </nz-spin>
+    <ng-template #dataProcessorSfTest>
+      <a (click)="executeDataProcessor()"><i nz-icon type="play-circle"></i>&nbsp;{{"test"|translate}}</a>
+    </ng-template>
+    <ng-template #dataProcessorSfSave>
+      <a (click)="submitDataProcessor()"><i nz-icon type="save"></i>&nbsp;{{"save"|translate}}</a>
+    </ng-template>
+    <ng-template #dataProcessorSfReset>
+      <a (click)="dataProcessorSf.reset()"><i nz-icon type="undo"></i>&nbsp;{{"reset"|translate}}</a>
+    </ng-template>
+
+    <nz-spin [nzSpinning]="parameterListLoading">
+      <nz-card nzBordered="true" nzTitle="测试参数" class="content-card-no-height" style="margin-top: 16px;" [nzActions]="[parameterAddAction]">
+        <div style="height: calc(100vh - 631px);">
+          <nz-table #parameterTable [nzData]="parameterList" nzSize="small" [nzShowPagination]="false">
+            <thead>
+              <tr>
+                <th>参数</th>
+                <th nzWidth="180px">测试值</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of parameterTable.data; let i = index;">
+                <td>
+                  <input type="text" nz-input [(ngModel)]="data.name" nzSize="small">
+                </td>
+                <td>
+                  <input type="text" nz-input [(ngModel)]="data.value" nzSize="small">
+                </td>
+                <td>
+                  <a (click)="deleteParameter(i)"><i nz-icon type="delete"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </nz-card>
+    </nz-spin>
+
+    <ng-template #parameterAddAction>
+      <a (click)="addParameter('empty')"><i nz-icon type="plus"></i>&nbsp;{{"add"|translate}}{{"parameter"|translate}}</a>
+    </ng-template>
+    <!-- <ng-template #parameterAddPagingAction>
+      <a (click)="addParameter('paging')"><i nz-icon type="plus"></i>&nbsp;{{"paging"|translate}}{{"parameter"|translate}}</a>
+    </ng-template>
+    <ng-template #parameterAddSortingAction>
+      <a (click)="addParameter('sorting')"><i nz-icon type="plus"></i>&nbsp;{{"sorting"|translate}}{{"parameter"|translate}}</a>
+    </ng-template> -->
   </nz-col>
   <nz-col nzXs="12" nzSm="12" nzMd="8" nzLg="8" nzXl="8" nzXXl="6">
-    <nz-card nzBordered="true" [nzTitle]="'子处理信息 - ' + (!dataSubProcessor.id?'新建':'编辑')" class="content-card-fix-height">
-      <nz-spin [nzSpinning]="dataSubProcessorLoading">
-        <sf #dataSubProcessorSf mode="edit" [schema]="dataSubProcessorSchema" [ui]="dataSubProcessorUI" [formData]="dataSubProcessor" [button]="null" (formSubmit)="submitDataSubProcessor($event)" class="compact-form button-right">
-        </sf>
-        <st #parameterSt [data]="[{type:'数字', name: 'year', value: '2017', optional: true }]" [columns]="parameterColumn"
-          [ps]="100" [page]="{show: false}" size="small">
-          <!-- <ng-template #parameterStHeader>
-            <div>
-                <label class="sub-header">参数列表</label>
-                <button nz-button nzSize="small" nz-tooltip nzTitle="{{'create'|translate}}" nzPlacement="bottom" (click)="addSubProcessor()" style="float:right;">
-                  <i nz-icon type="plus" theme="outline"></i>
-                </button>
-            </div>
-          </ng-template> -->
-        </st>
-        <div style="text-align: right; margin-top: 7px;">
-          <button nzType="primary" nz-button (click)="submitSubDataProcessor()" [disabled]="!dataSubProcessorSf.valid">{{"execute"|translate}}</button>
-          <button nzType="primary" nz-button (click)="submitSubDataProcessor()" [disabled]="!dataSubProcessorSf.valid">{{"save"|translate}}</button>
-          <button nzType="default" nz-button (click)="resetSubDataProcessor()">{{"reset"|translate}}</button>
+
+    <nz-spin [nzSpinning]="dataSubProcessorListLoading">
+      <nz-card nzBordered="true" nzTitle="子处理列表" class="content-card-no-height"  [nzActions]="[dataSubProcessorListAddAction]">
+        <div style="height: 190px;">
+          <st #dataSubProcessorSt [data]="dataSubProcessorList" [columns]="dataSubProcessorColumns"
+            [ps]="100" [page]="{show: false}" size="small">
+          </st>
         </div>
-      </nz-spin>
-    </nz-card>
+      </nz-card>
+      <ng-template #dataSubProcessorListAddAction>
+        <a (click)="addSubProcessor()"><i nz-icon type="plus"></i>&nbsp;{{"add"|translate}}</a>
+      </ng-template>
+    </nz-spin>
+
+    <nz-spin [nzSpinning]="dataSubProcessorLoading">
+      <nz-card nzBordered="true" [nzTitle]="'子处理信息 - ' + (!dataSubProcessor.id?'新建':'编辑')" class="content-card-no-height" style="margin-top: 16px;"
+        [nzActions]="[dataSubProcessorSfTest,dataSubProcessorSfSave,dataSubProcessorSfReset]">
+        <div style="height: calc(100vh - 631px);">
+          <sf #dataSubProcessorSf mode="edit" [schema]="dataSubProcessorSchema" [ui]="dataSubProcessorUI" [formData]="dataSubProcessor" [button]="null"
+            (formChange)="dataSubProcessorSfChange($event)" class="compact-form button-right">
+          </sf>
+          <ng-template #dataSubProcessorSfTest>
+            <a (click)="executeSubDataProcessor()"><i nz-icon type="play-circle"></i>&nbsp;{{"test"|translate}}</a>
+          </ng-template>
+          <ng-template #dataSubProcessorSfSave>
+            <a (click)="submitSubDataProcessor()"><i nz-icon type="save"></i>&nbsp;{{"save"|translate}}</a>
+          </ng-template>
+          <ng-template #dataSubProcessorSfReset>
+            <a (click)="resetSubDataProcessor()"><i nz-icon type="undo"></i>&nbsp;{{"reset"|translate}}</a>
+          </ng-template>
+
+        </div>
+      </nz-card>
+    </nz-spin>
   </nz-col>
   <nz-col nzXs="24" nzSm="24" nzMd="8" nzLg="8" nzXl="8" nzXXl="12">
     <nz-card nzBordered="true" class="content-card-fix-height-no-header content-card-no-padding">
-      <nz-tabset [nzSize]="'small'" class="tab-bar">
-        <nz-tab nzTitle="代码">
-          <ngx-codemirror [(ngModel)]="dataSubProcessor.code" [config]="cmOptions" (change)="onCodeChange()"></ngx-codemirror>
-        </nz-tab>
-      </nz-tabset>
+      <nz-spin [nzSpinning]="tabCardLoading">
+        <nz-tabset [nzSize]="'small'" class="tab-bar" [(nzSelectedIndex)]="selectedTabIndex">
+          <nz-tab nzTitle="代码">
+            <ngx-codemirror [(ngModel)]="code" [config]="cmOptions" (change)="onCodeChange($event)"></ngx-codemirror>
+          </nz-tab>
+          <nz-tab nzTitle="结果">
+            <app-data-sub-processor-result [result]="dataSubProcessorResult"></app-data-sub-processor-result>
+          </nz-tab>
+        </nz-tabset>
+      </nz-spin>
     </nz-card>
   </nz-col>
 </div>

@@ -5,6 +5,7 @@ import { GatewayComputationModule as CoreComputationModule } from './core/comput
 import { GatewaySystemQueryModule as CoreSystemQueryModule } from './core/system-query/system-query.module';
 import { GatewayDataProcessorModule as CoreDataProcessorModule } from './core/data-processor/data-processor.module';
 import { GatewayDataSubProcessorModule as CoreDataSubProcessorModule } from './core/data-sub-processor/data-sub-processor.module';
+import { GatewayDataProcessorParameterModule as CoreDataProcessorParameterModule } from './core/data-processor-parameter/data-processor-parameter.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -15,6 +16,7 @@ import { GatewayDataSubProcessorModule as CoreDataSubProcessorModule } from './c
         CoreSystemQueryModule,
         CoreDataProcessorModule,
         CoreDataSubProcessorModule,
+        CoreDataProcessorParameterModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

@@ -4,18 +4,33 @@
   "save": "保存",
   "create": "新建",
   "execute": "运行",
+  "test": "测试",
   "list": "列表",
+  "parameter": "参数",
+  "sorting": "排序",
+  "paging": "分页",
 
   "ambari-admin": "Ambari控制台",
   "nifi-admin": "Nifi控制台",
   "kylin-admin": "Kylin控制台",
-  "hdp-admin": "HDP日志",
+  "hdp-log-admin": "HDP日志",
 
   "data-processor": "数据处理",
   "data-processor.list": "数据处理列表",
   "nameSpace": "命名空间",
   "name": "名称",
   "state": "状态",
+
+  "number": "数字",
+  "text": "文本",
+  "date": "日期",
+  "datetime": "时间",
+
+  "true": "真",
+  "false": "假",
+
+
+
 
 
 

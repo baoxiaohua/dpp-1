@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ReuseTabService, STChangeSort } from '@delon/abc';
 import { EventBusService } from 'app/service/event-bus.service';
 import { TranslateService } from '@ngx-translate/core';
+import { TitleService } from '@delon/theme';
 
 @Component({
   selector: 'app-base-page',
@@ -30,6 +31,7 @@ export class BasePageComponent implements OnInit, AfterViewInit, BasePageInterfa
     protected reuseTabService: ReuseTabService,
     protected eventBusService: EventBusService,
     protected translateService: TranslateService,
+    protected titleService: TitleService,
   ) {
 
   }
@@ -55,6 +57,7 @@ export class BasePageComponent implements OnInit, AfterViewInit, BasePageInterfa
 
   ngOnDestroy(): void {
     this.reuseTabService['tabCount']--;
+
   }
 
   translate(key) {
@@ -81,7 +84,9 @@ export class BasePageComponent implements OnInit, AfterViewInit, BasePageInterfa
 
   setTitle(titleI18n: string, tabSuffix: string): void {
     this.translateService.get(titleI18n).subscribe(text => {
-      this.reuseTabService.title = !tabSuffix ? text : text + '-' + tabSuffix;
+      const title = !tabSuffix ? text : text + '-' + tabSuffix;
+      this.reuseTabService.title = title;
+      this.titleService.setTitle(title);
     });
   }
 

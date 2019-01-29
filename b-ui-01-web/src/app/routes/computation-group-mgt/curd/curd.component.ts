@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
+import { _HttpClient, ModalHelper, TitleService } from '@delon/theme';
 import { STColumn, STComponent, ReuseTabService } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import { BasePageComponent } from '@shared/base-page/base-page.component';
@@ -48,6 +48,7 @@ export class ComputationGroupMgtCurdComponent extends BasePageComponent
     reuseTabService: ReuseTabService,
     eventBusService: EventBusService,
     translateService: TranslateService,
+    titleService: TitleService,
     private http: _HttpClient,
     private modal: ModalHelper,
   ) {
@@ -57,6 +58,7 @@ export class ComputationGroupMgtCurdComponent extends BasePageComponent
       reuseTabService,
       eventBusService,
       translateService,
+      titleService,
     );
   }
 

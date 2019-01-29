@@ -1,6 +1,6 @@
 DEFAULT_MIN_LENGTH = 10
 DEFAULT_FIELD_MAX_LENGTH = 50
-DEFAULT_TEXT_MAX_LENGTH = 2000
+DEFAULT_TEXT_MAX_LENGTH = 4000
 
 entity SystemQuery {
     identifier String required unique maxlength(DEFAULT_FIELD_MAX_LENGTH),
@@ -54,13 +54,17 @@ entity DataProcessor {
     deleted Boolean
 }
 
+entity DataProcessorParameter {
+    dataProcessorId Long required,
+    json TextBlob
+}
+
 entity DataSubProcessor {
     dataProcessorId Long required,
     name String required maxlength(DEFAULT_FIELD_MAX_LENGTH),
     sequence Integer required,
     dataProcessorType DataProcessorType required,
     code TextBlob,
-    parameter TextBlob,
     outputAsTable Boolean required,
     outputAsObject Boolean required,
     outputAsResult Boolean required,

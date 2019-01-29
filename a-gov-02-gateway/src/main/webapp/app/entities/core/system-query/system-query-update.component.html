@@ -27,7 +27,7 @@
                 <div class="form-group">
                     <label class="form-control-label" for="field_definition">Definition</label>
                     <input type="text" class="form-control" name="definition" id="field_definition"
-                        [(ngModel)]="systemQuery.definition" required maxlength="2000"/>
+                        [(ngModel)]="systemQuery.definition" required maxlength="4000"/>
                     <div [hidden]="!(editForm.controls.definition?.dirty && editForm.controls.definition?.invalid)">
                         <small class="form-text text-danger"
                         [hidden]="!editForm.controls.definition?.errors?.required">
@@ -35,7 +35,7 @@
                         </small>
                         <small class="form-text text-danger"
                         [hidden]="!editForm.controls.definition?.errors?.maxlength">
-                        This field cannot be longer than 2000 characters.
+                        This field cannot be longer than 4000 characters.
                         </small>
                     </div>
                 </div>

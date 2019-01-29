@@ -31,8 +31,8 @@ public class SystemQuery implements Serializable {
     private String identifier;
 
     @NotNull
-    @Size(max = 2000)
-    @Column(name = "definition", length = 2000, nullable = false)
+    @Size(max = 4000)
+    @Column(name = "definition", length = 4000, nullable = false)
     private String definition;
 
     @Size(max = 50)

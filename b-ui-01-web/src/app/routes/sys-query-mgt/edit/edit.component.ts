@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ReuseTabService } from '@delon/abc';
 import { EventBusService } from 'app/service/event-bus.service';
 import { TranslateService } from '@ngx-translate/core';
+import { TitleService } from '@delon/theme';
 
 @Component({
   selector: 'app-sys-query-mgt-edit',
@@ -47,6 +48,7 @@ export class SysQueryMgtEditComponent extends BasePageComponent implements OnIni
     reuseTabService: ReuseTabService,
     eventBusService: EventBusService,
     translateService: TranslateService,
+    titleService: TitleService,
     private msgSrv: NzMessageService,
   ) {
     super(
@@ -55,6 +57,7 @@ export class SysQueryMgtEditComponent extends BasePageComponent implements OnIni
       reuseTabService,
       eventBusService,
       translateService,
+      titleService,
     );
   }
 

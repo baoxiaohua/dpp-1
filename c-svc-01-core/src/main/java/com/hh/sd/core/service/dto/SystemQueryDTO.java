@@ -17,7 +17,7 @@ public class SystemQueryDTO implements Serializable {
     private String identifier;
 
     @NotNull
-    @Size(max = 2000)
+    @Size(max = 4000)
     private String definition;
 
     @Size(max = 50)

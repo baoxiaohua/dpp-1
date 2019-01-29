@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { SFSchema, SFUISchema, SFComponent } from '@delon/form';
 import { BasePageComponent } from '@shared/base-page/base-page.component';
@@ -19,10 +19,16 @@ import { LayoutService } from 'app/service/layout.service';
 import { DataProcessorService } from 'app/service/core/data-processor.service';
 import { DataSubProcessorService } from 'app/service/core/data-sub-processor.service';
 import { DataProcessor, IDataProcessor } from 'app/model/core/data-processor.model';
-import { DataSubProcessor, IDataSubProcessor } from 'app/model/core/data-sub-processor.model';
+import { DataSubProcessor, IDataSubProcessor, DataProcessorType } from 'app/model/core/data-sub-processor.model';
 import { Editor } from 'codemirror';
 import { switchArrayElements } from 'app/util/array-util';
 import { DataSubProcessorCustomService } from 'app/service/core/custom/data-sub-processor.custom.service';
+import { TitleService } from '@delon/theme';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { debounceTime, switchMap } from 'rxjs/operators';
+import * as moment from 'moment';
+import { DataProcessorParameterCustomService } from 'app/service/core/custom/data-processor-parameter.custom.service';
+import { DataProcessorCustomService } from 'app/service/core/custom/data-processor.custom.service';
 
 @Component({
   selector: 'app-data-processor-edit',
@@ -30,7 +36,20 @@ import { DataSubProcessorCustomService } from 'app/service/core/custom/data-sub-
   styleUrls: ['./edit.component.less'],
 })
 export class DataProcessorEditComponent extends BasePageComponent implements OnInit {
+
   dataProcessorId;
+
+  dataProcessorSfDirty = false;
+  dataSubProcessorSfDirty = false;
+  dataSubProcessorCodeDirty = false;
+
+  // #region Right side tab card
+  code;
+  dataSubProcessorResult = {};
+  selectedTabIndex = 0;
+  tabCardLoading = false;
+  codeChange$ = new BehaviorSubject('');
+  // #endregion
 
   // #region CodeMirrorEditor
   cmEditor: Editor = null;
@@ -38,7 +57,7 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
   cmOptions: any = {
     lineNumbers: true,
     // mode: { name: 'text/x-groovy' },
-    mode: { name: 'text/x-pgsql' },
+    mode: { name: 'text/x-sql' },
     theme: 'dracula'
   };
   // #endregion
@@ -70,10 +89,10 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
   dataSubProcessorListLoading = false;
   dataSubProcessorList = [];
   dataSubProcessorColumns: STColumn[] = [
-    { title: '', index: 'sequence', width: '50px' },
-    { title: '', index: 'name' },
+    { title: '序号', index: 'sequence', width: '50px' },
+    { title: '名称', index: 'name' },
     {
-      title: '',
+      title: '操作',
       width: '140px',
       fixed: 'right',
       buttons: [
@@ -112,6 +131,9 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
           icon: 'edit',
           click: item => {
             this.dataSubProcessor = item as IDataProcessor;
+            this.code = this.dataSubProcessor.code;
+            this.changeCodeMode(this.dataSubProcessor.dataProcessorType);
+            this.selectedTabIndex = 0;
           }
         },
       ],
@@ -127,7 +149,7 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
 
   dataSubProcessorSchema: SFSchema = {
     properties: {
-      name: { type: 'string', title: '名称', maxLength: 15 },
+      name: { type: 'string', title: '名称', maxLength: 50 },
       dataProcessorType: {
         type: 'string',
         title: '类型',
@@ -150,15 +172,20 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
     $dataProcessorType: {
       widget: 'select',
       change: value => {
-        this.cmEditor.setOption('mode', { name: 'text/x-groovy' });
+        this.changeCodeMode(value);
       }
     },
   };
+  // #endregion
+
+  // #region parameterList
+  dataProcessorParameter = {};
+  parameterListLoading = false;
+
+  parameterList = [];
 
   parameterColumn: STColumn[] = [
     { title: '参数', index: 'name', width: '80px' },
-    { title: '可选', index: 'optional', width: '50px', type: 'radio' },
-    { title: '类型', index: 'type', width: '80px' },
     { title: '测试值', index: 'value' },
   ];
   // #endregion
@@ -169,12 +196,16 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
     reuseTabService: ReuseTabService,
     eventBusService: EventBusService,
     translateService: TranslateService,
+    titleService: TitleService,
     private dataProcessorService: DataProcessorService,
     private dataSubProcessorService: DataSubProcessorService,
     private msgSrv: NzMessageService,
     private layoutService: LayoutService,
     private codemirrorService: CodemirrorService,
     private dataSubProcessorCustomService: DataSubProcessorCustomService,
+    private changeRef: ChangeDetectorRef,
+    private dataProcessorParameterCustomService: DataProcessorParameterCustomService,
+    private dataProcessorCustomService: DataProcessorCustomService,
   ) {
     super(
       router,
@@ -182,6 +213,7 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
       reuseTabService,
       eventBusService,
       translateService,
+      titleService,
     );
   }
 
@@ -192,6 +224,9 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
       this.cmEditor = editor;
       editor.setSize('100%', `calc(100vh - ${this.layoutService.contentHeightOffset}px - 37px)`);
     });
+
+    // const code$: Observable<string> = this.codeChange$.asObservable().pipe(debounceTime(500));
+    // code$.subscribe(this.codeChangeHandler);
   }
 
   initVariable(params, queryParams): void {
@@ -210,13 +245,33 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
       this.dataProcessorLoading = false;
       this.dataProcessor = resp.body;
     });
+
+    this.parameterListLoading = true;
+    this.dataProcessorParameterCustomService.findByDataProcessorId(this.dataProcessorId).subscribe(resp => {
+      this.parameterListLoading = false;
+
+      if (!resp.body) {
+        this.dataProcessorParameter = {};
+        this.parameterList = [];
+        return;
+      }
+      this.dataProcessorParameter = resp.body;
+      this.parameterList = JSON.parse(this.dataProcessorParameter['json']);
+    });
   }
 
   loadDataSubProcessorList() {
     this.dataSubProcessorListLoading = true;
     this.dataSubProcessorService.query({'dataProcessorId.equals': this.dataProcessorId, sort: ['sequence,asc']}).subscribe(resp => {
-      this.dataSubProcessorListLoading = false;
       this.dataSubProcessorList = resp.body;
+
+      if (this.dataSubProcessorList.length > 0 && !this.dataSubProcessor.id) {
+        this.dataSubProcessor = this.dataSubProcessorList[0];
+        this.code = this.dataSubProcessor.code;
+        this.changeCodeMode(this.dataSubProcessor.dataProcessorType);
+      }
+
+      this.dataSubProcessorListLoading = false;
     });
   }
 
@@ -224,8 +279,10 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
 
   }
 
-  submitDataProcessor(formData) {
+  submitDataProcessor() {
+    const formData = this.dataProcessorSf.value;
     this.dataProcessorLoading = true;
+    formData['updateTs'] = moment(Date.now());
     this.dataProcessorService.update(formData).subscribe(resp => {
       this.dataProcessorLoading = false;
       this.dataProcessor = resp.body;
@@ -233,23 +290,39 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
     });
   }
 
-  addSubProcessor() {
-    this.dataSubProcessor = new DataSubProcessor();
+  executeDataProcessor() {
+
   }
 
-  submitSubDataProcessor() {
+  addSubProcessor() {
+    this.dataSubProcessor = new DataSubProcessor();
+    this.code = '';
+    this.changeCodeMode(this.dataSubProcessor.dataProcessorType);
+  }
+
+  dataSubProcessorSfChange(event) {
+    // console.log('formchange', this.dataSubProcessorListLoading);
+  }
+
+  submitSubDataProcessor(callback?) {
     const formData = this.dataSubProcessorSf.value;
     this.dataSubProcessorLoading = true;
-    formData['code'] = this.dataSubProcessor.code;
+    this.tabCardLoading = true;
+    formData['code'] = this.code;
+    formData['updateTs'] = moment(Date.now());
 
     if (!formData['id']) {
       formData['sequence'] = this.dataSubProcessorList.length + 1;
       formData['dataProcessorId'] = this.dataProcessor.id;
+      formData['createTs'] = moment(Date.now());
       this.dataSubProcessorService.create(formData).subscribe(resp => {
         this.dataSubProcessorLoading = false;
+        this.tabCardLoading = false;
         this.dataSubProcessor = resp.body;
 
         this.loadDataSubProcessorList();
+
+        if (callback) callback();
       });
     } else {
       const tmp = this.dataSubProcessorList.find(item => item.id === formData['id']);
@@ -257,11 +330,74 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
 
       this.dataSubProcessorService.update(formData).subscribe(resp => {
         this.dataSubProcessorLoading = false;
+        this.tabCardLoading = false;
         this.dataSubProcessor = resp.body;
 
         this.loadDataSubProcessorList();
+
+        if (callback) callback();
       });
     }
+  }
+
+  executeSubDataProcessor() {
+    const criteria = {};
+    this.parameterList.forEach(item => criteria[item['name']] = item['value']);
+
+    // let error = '';
+
+    // if (criteria['sort']) {
+    //   try {
+    //     criteria['sort'] = JSON.parse(criteria['sort']);
+    //   } catch (ex) {
+    //     error = 'sort值不合法<br/>';
+    //   }
+    // }
+
+    // if (criteria['pageNum'] || criteria['pageSize']) {
+    //   if (!criteria['pageNum'] || !criteria['pageSize']) {
+    //     error = 'pageNum与pageSize分页参数需配对使用<br/>';
+    //   }
+
+    //   try {
+    //     criteria['pageNum'] = Number.parseInt(criteria['pageNum'], null);
+    //     criteria['pageSize'] = Number.parseInt(criteria['pageSize'], null);
+    //   } catch (ex) {
+    //     error = 'pageNum与pageSize分页参数值必须为数字<br/>';
+    //   }
+    // }
+
+    // if (error !== '') {
+    //   this.msgSrv.error(error);
+    //   return;
+    // }
+
+    // if (!criteria['pageNum']) {
+    //   criteria['pageNum'] = 1;
+    //   criteria['pageSize'] = 50;
+    // }
+
+    criteria['debug'] = true;
+
+    this.dataSubProcessorLoading = true;
+    this.tabCardLoading = true;
+    this.submitSubDataProcessor(() => {
+      this.dataProcessorCustomService.debug(this.dataProcessor.identifier, this.dataSubProcessor.id, criteria).subscribe(resp => {
+        this.dataSubProcessorResult = resp.body;
+        this.selectedTabIndex = 1;
+
+        this.dataSubProcessorLoading = false;
+        this.tabCardLoading = false;
+      });
+    });
+
+    this.parameterListLoading = true;
+    this.dataProcessorParameter['json'] = JSON.stringify(this.parameterList);
+    this.dataProcessorParameter['dataProcessorId'] = this.dataProcessorId;
+    this.dataProcessorParameterCustomService.save(this.dataProcessorParameter).subscribe(resp => {
+      this.dataProcessorParameter = resp.body;
+      this.parameterListLoading = false;
+    });
   }
 
   resetSubDataProcessor() {
@@ -278,7 +414,86 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
     });
   }
 
-  onCodeChange() {
-    console.log(this.dataSubProcessor.code);
+  onCodeChange(event) {
+    if (!!event.type) return;
+
+    this.dataSubProcessorCodeDirty = true;
+
+    // if (!this.parameterStLoading) {
+    //   this.parameterStLoading = true;
+    //   this.changeRef.detectChanges();
+    // }
+
+    // this.codeChange$.next(event);
+
+    // this.parameterStLoading = true;
+    // this.parameterList = this.parseSql(event);
+    // this.parameterStLoading = false;
+  }
+
+  // codeChangeHandler = (newCode) => {
+
+  //   this.parameterStLoading = false;
+  //   this.changeRef.detectChanges();
+
+  //   if (newCode === null) return;
+
+  //   this.parameterList = this.parseSql(newCode);
+
+  //   setTimeout(() => {
+  //     this.codeChange$.next(null);
+  //   }, 500);
+  // }
+
+
+  parseSql(sql) {
+    console.log(sql);
+    const pattern = /:[a-z|0-9]+/gi;
+    const results = this.code.match(pattern);
+
+    const resParamList = [];
+
+    results.forEach(element => {
+      const param = element.replace(':', '');
+
+      if (resParamList.find(item => item.name === param)) return;
+
+      const existingParam = this.parameterList.find(item => item.name === param);
+
+      if (existingParam) resParamList.push(existingParam);
+      else resParamList.push({name: param, type: 'text', value: ''});
+
+    });
+
+    return resParamList;
+  }
+
+  addParameter(type) {
+    const arr = Object.assign([], this.parameterList);
+
+    if (type === 'paging') {
+      arr.push({name: 'pageNum', value: '1'});
+      arr.push({name: 'pageSize', value: '50'});
+    } else if (type === 'sorting') arr.push({name: 'sort', value: '[]'});
+    else if (type === 'empty') arr.push({name: '', value: ''});
+
+    this.parameterList = arr;
+  }
+
+  deleteParameter(index) {
+    const arr = Object.assign([], this.parameterList);
+    arr.splice(index, 1);
+    this.parameterList = arr;
+  }
+
+  changeCodeMode(value) {
+    let name = '';
+
+    if (value === DataProcessorType.CODE_GROOVY) name = 'text/x-groovy';
+    else if (value === DataProcessorType.SQL_KYLIN) name = 'text/x-sql';
+    else if (value === DataProcessorType.SQL_DB) name = 'text/x-pgsql';
+    else if (value === DataProcessorType.SQL_INTERIM) name = 'text/x-sqlite';
+
+    this.cmEditor.setOption('mode', { name: name });
   }
 }

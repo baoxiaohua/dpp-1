@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { EventBusService } from 'app/service/event-bus.service';
 import { TranslateService } from '@ngx-translate/core';
 import { SystemQueryService } from 'app/service/core/system-query.service';
+import { TitleService } from '@delon/theme';
 
 @Component({
   selector: 'app-sys-query-mgt-list',
@@ -72,6 +73,7 @@ export class SysQueryMgtListComponent extends BasePageComponent implements OnIni
     reuseTabService: ReuseTabService,
     eventBusService: EventBusService,
     translateService: TranslateService,
+    titleService: TitleService,
     private systemQueryService: SystemQueryService,
   ) {
     super(
@@ -80,6 +82,7 @@ export class SysQueryMgtListComponent extends BasePageComponent implements OnIni
       reuseTabService,
       eventBusService,
       translateService,
+      titleService,
     );
   }
 

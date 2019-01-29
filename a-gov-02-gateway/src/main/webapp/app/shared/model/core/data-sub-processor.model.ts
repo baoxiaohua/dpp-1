@@ -14,7 +14,6 @@ export interface IDataSubProcessor {
     sequence?: number;
     dataProcessorType?: DataProcessorType;
     code?: any;
-    parameter?: any;
     outputAsTable?: boolean;
     outputAsObject?: boolean;
     outputAsResult?: boolean;
@@ -32,7 +31,6 @@ export class DataSubProcessor implements IDataSubProcessor {
         public sequence?: number,
         public dataProcessorType?: DataProcessorType,
         public code?: any,
-        public parameter?: any,
         public outputAsTable?: boolean,
         public outputAsObject?: boolean,
         public outputAsResult?: boolean,

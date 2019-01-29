@@ -22,22 +22,26 @@
         {
           "i18n": "ambari-admin",
           "icon": "anticon anticon-appstore",
-          "link": "/data-processor/list1"
+          "target": "_blank",
+          "externalLink": "http://s1.hdp.com:8080/"
         },
         {
           "i18n": "nifi-admin",
           "icon": "anticon anticon-appstore",
-          "link": "/data-processor/list2"
+          "target": "_blank",
+          "externalLink": "http://s1.hdp.com:9090/nifi"
         },
         {
           "i18n": "kylin-admin",
           "icon": "anticon anticon-appstore",
-          "link": "/data-processor/list3"
+          "target": "_blank",
+          "externalLink": "http://s4.hdp.com:7070/kylin"
         },
         {
           "i18n": "hdp-log-admin",
           "icon": "anticon anticon-appstore",
-          "link": "/data-processor/list4"
+          "target": "_blank",
+          "externalLink": "http://s1.hdp.com:61888/"
         },
         {
           "i18n": "data-processor",

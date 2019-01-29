@@ -5,6 +5,7 @@ import { DataProcessorListComponent } from './list/list.component';
 import { DataProcessorEditComponent } from './edit/edit.component';
 import { CodemirrorModule } from '@nomadreservations/ngx-codemirror';
 import { DataProcessorCreateComponent } from './create/create.component';
+import { DataSubProcessorResultComponent } from './edit/data-sub-processor-result/data-sub-processor-result.component';
 
 
 const COMPONENTS = [
@@ -23,6 +24,7 @@ const COMPONENTS_NOROUNT = [
   declarations: [
     ...COMPONENTS,
     ...COMPONENTS_NOROUNT,
+    DataSubProcessorResultComponent,
   ],
   entryComponents: COMPONENTS_NOROUNT
 })

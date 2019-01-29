@@ -63,9 +63,6 @@ public class DataSubProcessorResourceIntTest {
     private static final String DEFAULT_CODE = "AAAAAAAAAA";
     private static final String UPDATED_CODE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_PARAMETER = "AAAAAAAAAA";
-    private static final String UPDATED_PARAMETER = "BBBBBBBBBB";
-
     private static final Boolean DEFAULT_OUTPUT_AS_TABLE = false;
     private static final Boolean UPDATED_OUTPUT_AS_TABLE = true;
 
@@ -139,7 +136,6 @@ public class DataSubProcessorResourceIntTest {
             .sequence(DEFAULT_SEQUENCE)
             .dataProcessorType(DEFAULT_DATA_PROCESSOR_TYPE)
             .code(DEFAULT_CODE)
-            .parameter(DEFAULT_PARAMETER)
             .outputAsTable(DEFAULT_OUTPUT_AS_TABLE)
             .outputAsObject(DEFAULT_OUTPUT_AS_OBJECT)
             .outputAsResult(DEFAULT_OUTPUT_AS_RESULT)
@@ -176,7 +172,6 @@ public class DataSubProcessorResourceIntTest {
         assertThat(testDataSubProcessor.getSequence()).isEqualTo(DEFAULT_SEQUENCE);
         assertThat(testDataSubProcessor.getDataProcessorType()).isEqualTo(DEFAULT_DATA_PROCESSOR_TYPE);
         assertThat(testDataSubProcessor.getCode()).isEqualTo(DEFAULT_CODE);
-        assertThat(testDataSubProcessor.getParameter()).isEqualTo(DEFAULT_PARAMETER);
         assertThat(testDataSubProcessor.isOutputAsTable()).isEqualTo(DEFAULT_OUTPUT_AS_TABLE);
         assertThat(testDataSubProcessor.isOutputAsObject()).isEqualTo(DEFAULT_OUTPUT_AS_OBJECT);
         assertThat(testDataSubProcessor.isOutputAsResult()).isEqualTo(DEFAULT_OUTPUT_AS_RESULT);
@@ -355,7 +350,6 @@ public class DataSubProcessorResourceIntTest {
             .andExpect(jsonPath("$.[*].sequence").value(hasItem(DEFAULT_SEQUENCE)))
             .andExpect(jsonPath("$.[*].dataProcessorType").value(hasItem(DEFAULT_DATA_PROCESSOR_TYPE.toString())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
-            .andExpect(jsonPath("$.[*].parameter").value(hasItem(DEFAULT_PARAMETER.toString())))
             .andExpect(jsonPath("$.[*].outputAsTable").value(hasItem(DEFAULT_OUTPUT_AS_TABLE.booleanValue())))
             .andExpect(jsonPath("$.[*].outputAsObject").value(hasItem(DEFAULT_OUTPUT_AS_OBJECT.booleanValue())))
             .andExpect(jsonPath("$.[*].outputAsResult").value(hasItem(DEFAULT_OUTPUT_AS_RESULT.booleanValue())))
@@ -381,7 +375,6 @@ public class DataSubProcessorResourceIntTest {
             .andExpect(jsonPath("$.sequence").value(DEFAULT_SEQUENCE))
             .andExpect(jsonPath("$.dataProcessorType").value(DEFAULT_DATA_PROCESSOR_TYPE.toString()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
-            .andExpect(jsonPath("$.parameter").value(DEFAULT_PARAMETER.toString()))
             .andExpect(jsonPath("$.outputAsTable").value(DEFAULT_OUTPUT_AS_TABLE.booleanValue()))
             .andExpect(jsonPath("$.outputAsObject").value(DEFAULT_OUTPUT_AS_OBJECT.booleanValue()))
             .andExpect(jsonPath("$.outputAsResult").value(DEFAULT_OUTPUT_AS_RESULT.booleanValue()))
@@ -886,7 +879,6 @@ public class DataSubProcessorResourceIntTest {
             .andExpect(jsonPath("$.[*].sequence").value(hasItem(DEFAULT_SEQUENCE)))
             .andExpect(jsonPath("$.[*].dataProcessorType").value(hasItem(DEFAULT_DATA_PROCESSOR_TYPE.toString())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
-            .andExpect(jsonPath("$.[*].parameter").value(hasItem(DEFAULT_PARAMETER.toString())))
             .andExpect(jsonPath("$.[*].outputAsTable").value(hasItem(DEFAULT_OUTPUT_AS_TABLE.booleanValue())))
             .andExpect(jsonPath("$.[*].outputAsObject").value(hasItem(DEFAULT_OUTPUT_AS_OBJECT.booleanValue())))
             .andExpect(jsonPath("$.[*].outputAsResult").value(hasItem(DEFAULT_OUTPUT_AS_RESULT.booleanValue())))
@@ -946,7 +938,6 @@ public class DataSubProcessorResourceIntTest {
             .sequence(UPDATED_SEQUENCE)
             .dataProcessorType(UPDATED_DATA_PROCESSOR_TYPE)
             .code(UPDATED_CODE)
-            .parameter(UPDATED_PARAMETER)
             .outputAsTable(UPDATED_OUTPUT_AS_TABLE)
             .outputAsObject(UPDATED_OUTPUT_AS_OBJECT)
             .outputAsResult(UPDATED_OUTPUT_AS_RESULT)
@@ -970,7 +961,6 @@ public class DataSubProcessorResourceIntTest {
         assertThat(testDataSubProcessor.getSequence()).isEqualTo(UPDATED_SEQUENCE);
         assertThat(testDataSubProcessor.getDataProcessorType()).isEqualTo(UPDATED_DATA_PROCESSOR_TYPE);
         assertThat(testDataSubProcessor.getCode()).isEqualTo(UPDATED_CODE);
-        assertThat(testDataSubProcessor.getParameter()).isEqualTo(UPDATED_PARAMETER);
         assertThat(testDataSubProcessor.isOutputAsTable()).isEqualTo(UPDATED_OUTPUT_AS_TABLE);
         assertThat(testDataSubProcessor.isOutputAsObject()).isEqualTo(UPDATED_OUTPUT_AS_OBJECT);
         assertThat(testDataSubProcessor.isOutputAsResult()).isEqualTo(UPDATED_OUTPUT_AS_RESULT);

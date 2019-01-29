@@ -41,10 +41,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="parameter" type="clob">
-                <constraints nullable="true" />
-            </column>
-
             <column name="output_as_table" type="boolean">
                 <constraints nullable="false" />
             </column>

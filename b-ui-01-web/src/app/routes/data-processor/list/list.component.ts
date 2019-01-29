@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
+import { _HttpClient, ModalHelper, TitleService } from '@delon/theme';
 import { STColumn, STComponent, ReuseTabService, STChange, STColumnTag } from '@delon/abc';
 import { SFSchema, SFComponent, SFUISchema } from '@delon/form';
 import { BasePageComponent } from '@shared/base-page/base-page.component';
@@ -11,7 +11,7 @@ import { IDataProcessor } from 'app/model/core/data-processor.model';
 import { DataProcessorCreateComponent } from '../create/create.component';
 import { LayoutService } from 'app/service/layout.service';
 import { NzMessageService } from 'ng-zorro-antd';
-
+import * as moment from 'moment';
 
 const STATE_TAG: STColumnTag = {
   'DRAFT': { text: '起草', color: 'blue' },
@@ -104,6 +104,7 @@ export class DataProcessorListComponent extends BasePageComponent implements OnI
     reuseTabService: ReuseTabService,
     eventBusService: EventBusService,
     translateService: TranslateService,
+    titleService: TitleService,
     private dataProcessorService: DataProcessorService,
     private modal: ModalHelper,
     private layoutService: LayoutService,
@@ -115,6 +116,7 @@ export class DataProcessorListComponent extends BasePageComponent implements OnI
       reuseTabService,
       eventBusService,
       translateService,
+      titleService,
     );
   }
 

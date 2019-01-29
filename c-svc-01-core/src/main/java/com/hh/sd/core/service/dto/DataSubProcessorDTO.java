@@ -30,9 +30,6 @@ public class DataSubProcessorDTO implements Serializable {
     @Lob
     private String code;
 
-    @Lob
-    private String parameter;
-
     @NotNull
     private Boolean outputAsTable;
 
@@ -98,14 +95,6 @@ public class DataSubProcessorDTO implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getParameter() {
-        return parameter;
-    }
-
-    public void setParameter(String parameter) {
-        this.parameter = parameter;
     }
 
     public Boolean isOutputAsTable() {
@@ -194,7 +183,6 @@ public class DataSubProcessorDTO implements Serializable {
             ", sequence=" + getSequence() +
             ", dataProcessorType='" + getDataProcessorType() + "'" +
             ", code='" + getCode() + "'" +
-            ", parameter='" + getParameter() + "'" +
             ", outputAsTable='" + isOutputAsTable() + "'" +
             ", outputAsObject='" + isOutputAsObject() + "'" +
             ", outputAsResult='" + isOutputAsResult() + "'" +
