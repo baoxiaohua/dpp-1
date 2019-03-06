@@ -1,5 +1,6 @@
 package com.hh.sd.core.repository.implement;
 
+import lombok.var;
 import org.hibernate.SQLQuery;
 import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
@@ -22,11 +23,16 @@ public class SharedRepository {
     @PersistenceContext
     EntityManager entityManager;
 
-    public List<Map<String, Object>> executeNativeSql(String sql) {
+    public List<Map<String, Object>> executeNativeSql(String sql, Map<String, Object> paramMap, List<String> paramList) {
         StopWatch stopWatch = new StopWatch("SystemQueryRepositoryImpl-query");
 
         stopWatch.start("Query data");
         Query query = entityManager.createNativeQuery(sql);
+
+        for(var param: paramList) {
+            query.setParameter(param, paramMap.get(param));
+        }
+
         query.unwrap(SQLQuery.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 
         List<Map<String, Object>> resultList=query.getResultList();

@@ -6,8 +6,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ReuseTabService } from '@delon/abc';
 import { EventBusService } from 'app/service/event-bus.service';
 import { TranslateService } from '@ngx-translate/core';
-import { SystemQueryCustomService } from 'app/service/core/custom/system-query.custom.service';
-import { SystemQueryService } from 'app/service/core/system-query.service';
 
 import { CodemirrorService } from '@nomadreservations/ngx-codemirror';
 
@@ -68,8 +66,6 @@ export class DashboardComponent extends BasePageComponent
     translateService: TranslateService,
     titleService: TitleService,
     private layoutService: LayoutService,
-    private systemQueryCustomService: SystemQueryCustomService,
-    private systemQueryService: SystemQueryService,
     // private _codeMirror: CodemirrorService,
   ) {
     super(router, activatedRoute, reuseTabService, eventBusService, translateService, titleService);
@@ -98,11 +94,7 @@ export class DashboardComponent extends BasePageComponent
   }
 
   test() {
-    this.systemQueryCustomService.query('COMPUTATION_QUERY', null).subscribe(
-      resp => {
-        console.log(resp);
-      }
-    );
+
     // this.systemQueryService.query().subscribe(
     //   resp => {console.log(resp); }
     // );

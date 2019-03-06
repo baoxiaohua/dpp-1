@@ -1,8 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { GatewayComputationGroupModule as CoreComputationGroupModule } from './core/computation-group/computation-group.module';
-import { GatewayComputationModule as CoreComputationModule } from './core/computation/computation.module';
-import { GatewaySystemQueryModule as CoreSystemQueryModule } from './core/system-query/system-query.module';
 import { GatewayDataProcessorModule as CoreDataProcessorModule } from './core/data-processor/data-processor.module';
 import { GatewayDataSubProcessorModule as CoreDataSubProcessorModule } from './core/data-sub-processor/data-sub-processor.module';
 import { GatewayDataProcessorParameterModule as CoreDataProcessorParameterModule } from './core/data-processor-parameter/data-processor-parameter.module';
@@ -11,9 +8,6 @@ import { GatewayDataProcessorParameterModule as CoreDataProcessorParameterModule
 @NgModule({
     // prettier-ignore
     imports: [
-        CoreComputationGroupModule,
-        CoreComputationModule,
-        CoreSystemQueryModule,
         CoreDataProcessorModule,
         CoreDataSubProcessorModule,
         CoreDataProcessorParameterModule,

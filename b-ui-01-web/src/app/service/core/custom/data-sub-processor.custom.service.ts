@@ -5,7 +5,6 @@ import * as moment from 'moment';
 import { map } from 'rxjs/operators';
 import { IDataSubProcessor, DataSubProcessor } from 'app/model/core/data-sub-processor.model';
 import { createRequestOption } from 'app/util/request-util';
-import { IDataProcessorResultDTO } from 'app/model/core/custom/computation.model';
 
 
 type EntityResponseType = HttpResponse<IDataSubProcessor>;

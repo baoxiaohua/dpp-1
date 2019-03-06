@@ -2,45 +2,6 @@ DEFAULT_MIN_LENGTH = 10
 DEFAULT_FIELD_MAX_LENGTH = 50
 DEFAULT_TEXT_MAX_LENGTH = 4000
 
-entity SystemQuery {
-    identifier String required unique maxlength(DEFAULT_FIELD_MAX_LENGTH),
-    definition String required maxlength(DEFAULT_TEXT_MAX_LENGTH),
-    roles String maxlength(DEFAULT_FIELD_MAX_LENGTH),
-    createTs Instant,
-    updateTs Instant
-}
-
-entity ComputationGroup {
-    identifier String required unique maxlength(DEFAULT_FIELD_MAX_LENGTH),
-    name String required unique maxlength(DEFAULT_FIELD_MAX_LENGTH),
-    remark String,
-    createTs Instant,
-    updateTs Instant,
-    deleted Boolean
-}
-
-entity Computation {
-    identifier String required unique maxlength(DEFAULT_FIELD_MAX_LENGTH),
-    name String required unique maxlength(DEFAULT_FIELD_MAX_LENGTH),
-    type ComputationType,
-    status ComputationStatus,
-    remark String,
-    createTs Instant,
-    updateTs Instant,
-    computationGroupId Long,
-    deleted Boolean
-}
-
-enum ComputationStatus {
-    DRAFT,
-    ACTIVE,
-    ERROR
-}
-
-enum ComputationType {
-    KYLIN_SQL
-}
-
 entity DataProcessor {
     nameSpace String required maxlength(DEFAULT_FIELD_MAX_LENGTH),
     identifier String required unique maxlength(DEFAULT_FIELD_MAX_LENGTH),

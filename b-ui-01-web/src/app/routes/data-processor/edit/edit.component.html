@@ -30,13 +30,17 @@
 <div nz-row nzGutter="16">
   <nz-col nzXs="12" nzSm="12" nzMd="8" nzLg="8" nzXl="8" nzXXl="6">
     <nz-spin [nzSpinning]="dataProcessorLoading">
-      <nz-card nzBordered="true" nzTitle="基本信息" class="content-card-no-height" [nzActions]="[dataProcessorSfSave,dataProcessorSfReset]">
+      <nz-card nzBordered="true" nzTitle="基本信息" class="content-card-no-height" [nzActions]="[dataProcessorSfEnable,dataProcessorSfSave,dataProcessorSfReset]">
         <div style="height: 190px;">
           <sf #dataProcessorSf mode="edit" [schema]="dataProcessorSchema" [ui]="dataProcessorUI" [formData]="dataProcessor" [button]="null" class="compact-form button-right">
           </sf>
         </div>
       </nz-card>
     </nz-spin>
+    <ng-template #dataProcessorSfEnable>
+      <a *ngIf="dataProcessor.state !== 'ENABLED'" (click)="enableDataProcessor(true)"><i nz-icon type="play-circle"></i>&nbsp;{{"enable"|translate}}</a>
+      <a *ngIf="dataProcessor.state === 'ENABLED'" (click)="enableDataProcessor(false)"><i nz-icon type="poweroff"></i>&nbsp;{{"disable"|translate}}</a>
+    </ng-template>
     <ng-template #dataProcessorSfTest>
       <a (click)="executeDataProcessor()"><i nz-icon type="play-circle"></i>&nbsp;{{"test"|translate}}</a>
     </ng-template>

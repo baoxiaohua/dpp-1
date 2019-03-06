@@ -64,6 +64,7 @@ spring:
             hibernate.cache.hazelcast.use_lite_member: true
     liquibase:
         contexts: prod
+        enabled: false
     mail:
         host: localhost
         port: 25
@@ -166,3 +167,7 @@ jhipster:
 # ===================================================================
 
 # application:
+kylin:
+    jdbc-url: jdbc:kylin://10.96.129.55:7070/dpp
+    user: ADMIN
+    password: KYLIN

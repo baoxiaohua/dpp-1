@@ -2,6 +2,7 @@ package com.hh.sd.core.utility;
 
 import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 import lombok.var;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -24,21 +25,17 @@ public class SqlUtility {
         return resSql;
     }
 
-    public static String injectParameterValue(String sql, Map<String, Object> paramMap) {
-        final String[] resSqlArr = {sql};
-
-        paramMap.entrySet().forEach(entry -> {
-            resSqlArr[0] = resSqlArr[0].replaceAll("\\$\\{" + entry.getKey() + "}", entry.getValue().toString());
-        });
-
-        String resSql = resSqlArr[0];
-        Matcher matcher = Pattern.compile("\\[(.*?)]").matcher(resSql);
+    public static String processOptionalParam(String sql, Map<String, Object> paramMap) {
+        String resSql = sql;
+        Matcher matcher = Pattern.compile("\\[.*?:([a-z|0-9|-|_]*).*?]",Pattern.CASE_INSENSITIVE).matcher(resSql);
         while(matcher.find()) {
-            String fullClause = matcher.group(0);
-            String clause = matcher.group(1);
-            if (clause.matches(".*\\$\\{.*?}.*")) resSql = resSql.replace(fullClause, " ");
-            else resSql = resSql.replace(fullClause, clause);
+            String segment = matcher.group(0);
+            String param = matcher.group(1);
+
+            if(!paramMap.containsKey(param)) resSql = resSql.replace(segment, " ");
         }
+
+        resSql = resSql.replaceAll("\\[|]","");
 
         return resSql;
     }
@@ -50,12 +47,9 @@ public class SqlUtility {
         return countSql;
     }
 
-    /**
-     * @param sortStr e.g. id:desc,name:asc
-     * @return
-     */
-    public static String getSortingClause(String sortStr) {
-        if(sortStr.trim().equals("")) return "";
+    public static String getSortingClause(List<String> sortArr) {
+        if(sortArr.size() == 0) return "";
+        var sortStr = StringUtils.join(sortArr, ",");
 
         return "order by " + sortStr.replaceAll(":", " ") + " ";
     }
@@ -63,8 +57,8 @@ public class SqlUtility {
     public static String getSortingPagingSql(String sql, Map<String, Object> paramMap, String pagingTemplate) {
         Matcher matcher = Pattern.compile("\\$sort\\{(.*?)}").matcher(sql);
         if(matcher.find()) {
-            var sortStr = paramMap.getOrDefault(matcher.group(1).trim(), "").toString();
-            sql = sql.replace(matcher.group(0), SqlUtility.getSortingClause(sortStr));
+            var sortArr = (List<String>)paramMap.getOrDefault(matcher.group(1).trim(), new ArrayList<String>());
+            sql = sql.replace(matcher.group(0), SqlUtility.getSortingClause(sortArr));
         }
 
         matcher = Pattern.compile("\\$page\\{(.*?)}").matcher(sql);
@@ -94,12 +88,23 @@ public class SqlUtility {
         return result;
     }
 
+    public static List<String> getQueryParamList(String sql) {
+        var paramList = new ArrayList<String>();
+
+        Matcher matcher = Pattern.compile(":([a-z|0-9|-|_]*)",Pattern.CASE_INSENSITIVE).matcher(sql);
+        while(matcher.find()) {
+            String param = matcher.group(1);
+            paramList.add(param);
+        }
+
+        return paramList;
+    }
+
     private static String getPagingClause(int pageNum, int pageSize, String pagingTemplate) {
         if(pageSize == -1 || pageNum == -1) return "";
 
         int offset = pageSize * (pageNum - 1);
         return pagingTemplate.replace("$offset", String.valueOf(offset)).replace("$pageSize", String.valueOf(pageSize));
     }
-
 
 }

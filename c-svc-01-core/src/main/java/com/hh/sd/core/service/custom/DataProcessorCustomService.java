@@ -3,6 +3,7 @@ package com.hh.sd.core.service.custom;
 import com.hh.sd.core.domain.DataProcessor;
 import com.hh.sd.core.domain.DataSubProcessor;
 import com.hh.sd.core.domain.enumeration.DataProcessorType;
+import com.hh.sd.core.domain.enumeration.State;
 import com.hh.sd.core.repository.DataProcessorRepository;
 import com.hh.sd.core.repository.custom.DataProcessorCustomRepository;
 import com.hh.sd.core.repository.custom.DataSubProcessorCustomRepository;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +53,14 @@ public class DataProcessorCustomService {
         this.kylinHelper = kylinHelper;
     }
 
+    public DataProcessor enable(long dataProcessorId, boolean enabled) {
+        var dataProcessor = dataProcessorRepository.findById(dataProcessorId).get();
+        dataProcessor.setState(enabled? State.ENABLED : State.DISABLED);
+        dataProcessor.setUpdateTs(Instant.now());
+
+        return dataProcessorRepository.save(dataProcessor);
+    }
+
     /**
      * @param identifier
      * @param paramMap
@@ -58,19 +68,23 @@ public class DataProcessorCustomService {
      * @return
      * @throws Exception
      */
-    public DataProcessorResultDTO execute(String identifier, Map<String, Object> paramMap, Long dataSubProcessorId) throws Exception {
+    public DataProcessorResultDTO execute(String identifier, Map<String, Object> paramMap, Long dataSubProcessorId, boolean external) throws Exception {
+
+        var debug = (Boolean) paramMap.getOrDefault("debug", false);
+
         StopWatch stopWatch = new StopWatch("Execute DataProcessor: " + dataSubProcessorId);
 
         // region - Load DataProcessor and DataSubProcessorList
         stopWatch.start("Load DataProcessor and DataSubProcessorList");
         DataProcessor dataProcessor = dataProcessorCustomRepository.findByIdentifier(identifier).orElse(null);
         if (dataProcessor == null) throw new Exception("DataProcessor not found by identifier: " + identifier);
+        if(!debug && external && !dataProcessor.isRestApi()) throw new Exception("DataProcessor not support Rest API: " + identifier);
+        if(!debug && !dataProcessor.getState().equals(State.ENABLED)) throw new Exception("DataProcessor is not enabled: " + identifier);
 
         List<DataSubProcessor> dataSubProcessorList = dataSubProcessorCustomRepository.findByDataProcessorIdOrderBySequenceAsc(dataProcessor.getId());
         stopWatch.stop();
         // endregion
 
-        var debug = (Boolean) paramMap.getOrDefault("debug", false);
 
         // region - Init final result DTO and SqliteHelper
         DataProcessorResultDTO dataProcessorResultDTO = new DataProcessorResultDTO();
@@ -104,7 +118,7 @@ public class DataProcessorCustomService {
             }
 
             // Put result into result DTO if need to output as result or admin is testing the dataSubProcessor
-            if ( (!dataSubProcessorId.equals(-1) && dataSubProcessor.isOutputAsResult()) || dataSubProcessor.getId().equals(dataSubProcessorId)) {
+            if ( (!dataSubProcessorId.equals(-1L) && dataSubProcessor.isOutputAsResult()) || dataSubProcessor.getId().equals(dataSubProcessorId)) {
                 dataProcessorResultDTO.getResults().put(dataSubProcessor.getName(), dataSubProcessorResultModel);
             }
 

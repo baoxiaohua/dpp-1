@@ -9,6 +9,8 @@
   "parameter": "参数",
   "sorting": "排序",
   "paging": "分页",
+  "enable": "启用",
+  "disable": "停用",
 
   "ambari-admin": "Ambari控制台",
   "nifi-admin": "Nifi控制台",

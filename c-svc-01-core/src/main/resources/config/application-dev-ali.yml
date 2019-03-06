@@ -157,3 +157,7 @@ jhipster:
 # ===================================================================
 
 # application:
+kylin:
+    jdbc-url: jdbc:kylin://10.96.129.55:7070/dpp
+    user: ADMIN
+    password: KYLIN

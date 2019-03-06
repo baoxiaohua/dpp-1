@@ -101,7 +101,7 @@ export class LayoutDefaultComponent
     private el: ElementRef,
     private renderer: Renderer2,
     @Inject(DOCUMENT) private doc: any,
-    private layoutService: LayoutService
+    public layoutService: LayoutService
   ) {
     iconSrv.addIcon(...ICONS);
     // scroll to top in change page

@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { map } from 'rxjs/operators';
 import { IDataProcessor } from 'app/model/core/data-processor.model';
 import { createRequestOption } from 'app/util/request-util';
-import { IDataProcessorResultDTO } from 'app/model/core/custom/computation.model';
+import { IDataProcessorResultDTO } from 'app/model/core/custom/data-processor-result.dto';
 
 
 type EntityResponseType = HttpResponse<IDataProcessor>;
@@ -29,5 +29,15 @@ export class DataProcessorCustomService {
       const options = createRequestOption({'identifier': identifier, 'dataSubProcessorId': dataSubProcessorId});
       return this.http.post<IDataProcessorResultDTO>(
         this.resourceUrl + '/debug', paramMap || {}, { params: options, observe: 'response' });
+    }
+
+    enable(dataProcessorId: number, enabled: boolean): Observable<HttpResponse<IDataProcessor>> {
+      const options = createRequestOption({
+        'dataProcessorId': dataProcessorId,
+        'enabled': enabled
+      });
+
+      return this.http.get<IDataProcessor>(
+        this.resourceUrl + '/enable', { params: options, observe: 'response' });
     }
 }

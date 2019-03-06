@@ -7,7 +7,6 @@
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181114080103_added_entity_ComputationGroup.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181114080104_added_entity_Computation.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20181116045026_added_entity_SystemQuery.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181116055521_added_entity_SystemQuery.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181218140921_added_entity_DataProcessor.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181218140922_added_entity_DataSubProcessor.xml" relativeToChangelogFile="false"/>

@@ -48,7 +48,6 @@ spring:
         open-in-view: false
         show-sql: false
         hibernate:
-            ddl-auto: none
             naming:
                 physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
@@ -58,10 +57,11 @@ spring:
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
-            hibernate.hbm2ddl.auto: validate
+            hibernate.hbm2ddl.auto: create-drop
             hibernate.jdbc.time_zone: UTC
     liquibase:
         contexts: test
+        enabled: false
     mail:
         host: localhost
     messages:
@@ -118,3 +118,7 @@ jhipster:
 # ===================================================================
 
 # application:
+kylin:
+    jdbc-url: jdbc:kylin://10.96.129.55:7070/dpp
+    user: ADMIN
+    password: KYLIN

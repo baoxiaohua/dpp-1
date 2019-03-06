@@ -77,6 +77,11 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
       restApi: { type: 'boolean', title: 'Rest接口' },
     },
     required: ['nameSpace', 'name', 'identifier'],
+    ui: {
+      grid: {
+        span: 24
+      }
+    }
   };
 
   dataProcessorUI: SFUISchema = {
@@ -160,15 +165,21 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
           { label: '脚本-Groovy', value: 'CODE_GROOVY' }
         ]
       },
-      outputAsTable: { type: 'boolean', title: '输出表' },
-      outputAsObject: { type: 'boolean', title: '输出对象' },
+      outputAsTable: { type: 'boolean', title: '输出表', ui: {grid: { span: 9 }}},
+      outputAsObject: { type: 'boolean', title: '输出对象', ui: {grid: { span: 9 }} },
       outputAsResult: { type: 'boolean', title: '输出结果' },
     },
     required: ['name', 'dataProcessorType'],
+    ui: {
+      grid: {
+        span: 24
+      }
+    }
   };
 
   dataSubProcessorUI: SFUISchema = {
     '*': { spanLabelFixed: 90 },
+
     $dataProcessorType: {
       widget: 'select',
       change: value => {
@@ -291,7 +302,7 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
   }
 
   executeDataProcessor() {
-
+    this.execute(-1);
   }
 
   addSubProcessor() {
@@ -341,48 +352,22 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
   }
 
   executeSubDataProcessor() {
-    const criteria = {};
-    this.parameterList.forEach(item => criteria[item['name']] = item['value']);
+    this.execute(this.dataSubProcessor.id);
+  }
 
-    // let error = '';
+  execute(dataSubProcessorId) {
+    let criteriaJson = '{';
+    this.parameterList.forEach(item => {
+      criteriaJson += '"' + item['name'] + '": ' + item['value'] + ',';
+    });
+    criteriaJson += '"debug": true }';
 
-    // if (criteria['sort']) {
-    //   try {
-    //     criteria['sort'] = JSON.parse(criteria['sort']);
-    //   } catch (ex) {
-    //     error = 'sort值不合法<br/>';
-    //   }
-    // }
-
-    // if (criteria['pageNum'] || criteria['pageSize']) {
-    //   if (!criteria['pageNum'] || !criteria['pageSize']) {
-    //     error = 'pageNum与pageSize分页参数需配对使用<br/>';
-    //   }
-
-    //   try {
-    //     criteria['pageNum'] = Number.parseInt(criteria['pageNum'], null);
-    //     criteria['pageSize'] = Number.parseInt(criteria['pageSize'], null);
-    //   } catch (ex) {
-    //     error = 'pageNum与pageSize分页参数值必须为数字<br/>';
-    //   }
-    // }
-
-    // if (error !== '') {
-    //   this.msgSrv.error(error);
-    //   return;
-    // }
-
-    // if (!criteria['pageNum']) {
-    //   criteria['pageNum'] = 1;
-    //   criteria['pageSize'] = 50;
-    // }
-
-    criteria['debug'] = true;
+    const criteria = JSON.parse(criteriaJson);
 
     this.dataSubProcessorLoading = true;
     this.tabCardLoading = true;
     this.submitSubDataProcessor(() => {
-      this.dataProcessorCustomService.debug(this.dataProcessor.identifier, this.dataSubProcessor.id, criteria).subscribe(resp => {
+      this.dataProcessorCustomService.debug(this.dataProcessor.identifier, dataSubProcessorId, criteria).subscribe(resp => {
         this.dataSubProcessorResult = resp.body;
         this.selectedTabIndex = 1;
 
@@ -495,5 +480,15 @@ export class DataProcessorEditComponent extends BasePageComponent implements OnI
     else if (value === DataProcessorType.SQL_INTERIM) name = 'text/x-sqlite';
 
     this.cmEditor.setOption('mode', { name: name });
+  }
+
+  enableDataProcessor(enabled) {
+    this.dataProcessorLoading = true;
+
+    this.dataProcessorCustomService.enable(this.dataProcessorId, enabled).subscribe(resp => {
+      this.dataProcessorLoading = false;
+      this.dataProcessor = resp.body;
+      this.emitEvent('data_processor_list:refresh');
+    });
   }
 }

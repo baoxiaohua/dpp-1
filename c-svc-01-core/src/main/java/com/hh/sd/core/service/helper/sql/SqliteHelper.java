@@ -30,13 +30,14 @@ public class SqliteHelper {
 
         var sql = dataSubProcessor.getCode();
         sql = SqlUtility.preProcessSql(sql);
-        sql = SqlUtility.injectParameterValue(sql, paramMap);
+        sql = SqlUtility.processOptionalParam(sql, paramMap);
+        var paramList = SqlUtility.getQueryParamList(sql);
 
         // if paging required, count total
         if (sql.matches(".*\\$page\\{.*?}.*")) {
             var countSql = SqlUtility.getCountSql(sql);
             if (debug) dataSubProcessorResultModel.setDebug("CountSql: " + countSql +"; ");
-            var countResult = this.query(countSql);
+            var countResult = this.query(countSql, paramMap, paramList);
             dataSubProcessorResultModel.setTotal(NumberUtils.toLong(countResult.get(0).get("cnt").toString()));
         }
 
@@ -44,7 +45,7 @@ public class SqliteHelper {
 
         if (debug) dataSubProcessorResultModel.setDebug("Sql: " + sql +"; ");
 
-        var result = this.query(sql);
+        var result = this.query(sql, paramMap, paramList);
 
         dataSubProcessorResultModel.setResult(result);
 
@@ -88,11 +89,16 @@ public class SqliteHelper {
         // endregion
     }
 
-    private List<Map<String, Object>> query(String sql) throws SQLException {
+    private List<Map<String, Object>> query(String sql, Map<String, Object> paramMap, List<String> paramList) throws SQLException {
         var result = new ArrayList<Map<String, Object>>();
 
-        Statement statement = getConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
+        sql = sql.replaceAll(":([a-z|0-9|-|_]*)","?");
+
+        PreparedStatement preparedStatement = getConnection().prepareStatement(sql);
+        for(var i=0; i<paramList.size(); i++) {
+            preparedStatement.setObject(i+1, paramMap.get(paramList.get(i)));
+        }
+        ResultSet resultSet = preparedStatement.executeQuery();
 
         return SqlUtility.extractData(resultSet);
     }

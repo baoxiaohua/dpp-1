@@ -31,13 +31,15 @@ public class PostgresHelper {
 
         var sql = dataSubProcessor.getCode();
         sql = SqlUtility.preProcessSql(sql);
-        sql = SqlUtility.injectParameterValue(sql, paramMap);
+        sql = SqlUtility.processOptionalParam(sql, paramMap);
+
+        var paramList = SqlUtility.getQueryParamList(sql);
 
         // if paging required, count total
         if (sql.matches(".*\\$page\\{.*?}.*")) {
             var countSql = SqlUtility.getCountSql(sql);
             if (debug) dataSubProcessorResultModel.setDebug("CountSql: " + countSql +"; ");
-            var countResult = sharedRepository.executeNativeSql(countSql);
+            var countResult = sharedRepository.executeNativeSql(countSql, paramMap, paramList);
             dataSubProcessorResultModel.setTotal(NumberUtils.toLong(countResult.get(0).get("cnt").toString()));
         }
 
@@ -45,7 +47,7 @@ public class PostgresHelper {
 
         if (debug) dataSubProcessorResultModel.setDebug("Sql: " + sql +";" );
 
-        var result = sharedRepository.executeNativeSql(sql);
+        var result = sharedRepository.executeNativeSql(sql, paramMap, paramList);
 
         dataSubProcessorResultModel.setResult(result);
 

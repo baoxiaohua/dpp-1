@@ -28,8 +28,6 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       // 业务子模块
-      { path: 'computation-group', loadChildren: './computation-group-mgt/computation-group-mgt.module#ComputationGroupMgtModule' },
-      { path: 'sys-query', loadChildren: './sys-query-mgt/sys-query-mgt.module#SysQueryMgtModule' },
       { path: 'data-processor', loadChildren: './data-processor/data-processor.module#DataProcessorModule' },
     ]
   },
