@@ -1,0 +1,6 @@
+projectKey=com.hh.sd.dpp:DppWeb
+serverUrl=http://10.96.150.156:9001
+serverVersion=7.1.0.11001
+dashboardUrl=http://10.96.150.156:9001/dashboard/index/com.hh.sd.dpp:DppWeb
+ceTaskId=AWkF_QeiCWyjVAM_CUhZ
+ceTaskUrl=http://10.96.150.156:9001/api/ce/task?id=AWkF_QeiCWyjVAM_CUhZ
