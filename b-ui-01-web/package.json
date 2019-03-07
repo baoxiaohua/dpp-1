@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "npm run color-less && ng serve -o",
     "build": "npm run color-less && ng build --prod --build-optimizer --extract-css=false",
+    "sonar": "sonar-scanner",
     "test": "ng test",
     "lint": "npm run lint:ts && npm run lint:style",
     "e2e": "ng e2e",
