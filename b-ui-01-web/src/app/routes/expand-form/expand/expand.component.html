@@ -1,0 +1,37 @@
+<page-header [title]="null" [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <div nz-row>
+      <nz-col nzSpan="16">
+        <nz-breadcrumb>
+          <nz-breadcrumb-item>
+            <a [routerLink]="['/']">{{'home'|translate}}</a>
+          </nz-breadcrumb-item>
+          <nz-breadcrumb-item>{{'expand-form.expand'|translate}}</nz-breadcrumb-item>
+        </nz-breadcrumb>
+      </nz-col>
+      <nz-col nzSpan="8" style="text-align: right;">
+        <button nz-button nzType="dashed" nzSize="small" nz-tooltip nzTitle="{{'close'|translate}}" nzPlacement="bottom" (click)="close()">
+          <i nz-icon type="close" theme="outline"></i>
+        </button>
+        <button nz-button nzType="dashed" nzSize="small" nz-tooltip nzTitle="{{'back'|translate}}" nzPlacement="bottom" (click)="goToPrevious()">
+          <i nz-icon type="arrow-left" theme="outline"></i>
+        </button>
+        <button nz-button nzType="dashed" nzSize="small" nz-tooltip nzTitle="{{'reload'|translate}}" nzPlacement="bottom" (click)="loadPage()">
+          <i nz-icon type="reload" theme="outline"></i>
+        </button>
+      </nz-col>
+    </div>
+  </ng-template>
+</page-header>
+<nz-card>
+  <div class="mb-md">
+    <input nz-input [(ngModel)]="params.name" name="name" nzPlaceHolder="请输入姓名" style="width: 100px;" class="mr-sm">
+    <button nz-button (click)="st.load(1)" [nzType]="'primary'">搜索</button>
+    <button nz-button (click)="params = {}; st.reset()">重置</button>
+  </div>
+  <st [data]="users" [columns]="columns" [expand]="expand" expandRowByClick>
+    <ng-template #expand let-item let-index="index" let-column="column">
+      {{ item.description }}
+    </ng-template>
+  </st>
+</nz-card>

@@ -1,0 +1,67 @@
+@import '~@delon/theme/styles/default';
+:host {
+  .main {
+    display: flex;
+    padding-top: 12px;
+  }
+  .left {
+    min-width: 310px;
+    max-width: 448px;
+  }
+  .right {
+    flex: 1;
+    padding-left: 104px;
+    .avatar_title {
+      height: 22px;
+      margin-bottom: 8px;
+      color: @heading-color;
+      font-size: @font-size-base;
+      line-height: 22px;
+    }
+    .avatar {
+      width: 144px;
+      height: 144px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      img {
+        width: 100%;
+      }
+    }
+    .button_view {
+      width: 144px;
+      text-align: center;
+    }
+  }
+}
+
+@media screen and (max-width: @mobile-max) {
+  :host {
+    flex-direction: column-reverse;
+    .right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 448px;
+      padding: 20px;
+      .avatar_title {
+        display: none;
+      }
+    }
+  }
+}
+.ant-card {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, .65);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  -webkit-font-feature-settings: 'tnum';
+  font-feature-settings: 'tnum';
+  position: relative;
+  background: #fff;
+  border-radius: 2px;
+  transition: none;
+}

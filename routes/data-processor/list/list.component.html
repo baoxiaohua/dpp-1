@@ -1,0 +1,42 @@
+<page-header [title]="null" [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <div nz-row>
+      <nz-col nzSpan="16">
+        <nz-breadcrumb>
+          <nz-breadcrumb-item>
+            <a [routerLink]="['/']">{{'home'|translate}}</a>
+          </nz-breadcrumb-item>
+          <nz-breadcrumb-item>{{'data-processor.list'|translate}}</nz-breadcrumb-item>
+        </nz-breadcrumb>
+      </nz-col>
+      <nz-col nzSpan="8" style="text-align: right;">
+        <button nz-button nzType="dashed" nzSize="small" nz-tooltip nzTitle="{{'close'|translate}}" nzPlacement="bottom" (click)="close()">
+          <i nz-icon type="close" theme="outline"></i>
+        </button>
+        <button nz-button nzType="dashed" nzSize="small" nz-tooltip nzTitle="{{'back'|translate}}" nzPlacement="bottom" (click)="goToPrevious()">
+          <i nz-icon type="arrow-left" theme="outline"></i>
+        </button>
+        <button nz-button nzType="dashed" nzSize="small" nz-tooltip nzTitle="{{'reload'|translate}}" nzPlacement="bottom" (click)="loadPage()">
+          <i nz-icon type="reload" theme="outline"></i>
+        </button>
+      </nz-col>
+    </div>
+  </ng-template>
+</page-header>
+
+<nz-card nzBordered="false" class="content-card-fix-height-no-header">
+  <nz-spin [nzSpinning]="loading">
+      <div #sfDiv style="margin-bottom: 10px;">
+        <sf #sf mode="search" [schema]="searchSchema" [button]="null">
+          <button nzType="primary" nz-button (click)="search()">{{"search"|translate}}</button>
+          <button (click)="reset()" type="button" nz-button>{{"reset"|translate}}</button>
+          <nz-divider nzType="vertical"></nz-divider>
+          <button nzType="primary" nz-button (click)="add()">{{"add"|translate}}</button>
+          <button nzType="primary" nz-button (click)="add()">{{"export"|translate}}</button>
+        </sf>
+      </div>
+      <st #st [data]="stData.list" [columns]="columns" size="small" [multiSort]="multiSort" [scroll]="{x: '1400px', y: 'calc(100vh - '+stHeightOffset+'px)'}"
+              [page]="{front:false}" [ps]="stData.pageSize" [total]="stData.total" (change)="change($event)">
+      </st>
+  </nz-spin>
+</nz-card>

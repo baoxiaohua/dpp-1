@@ -1,0 +1,29 @@
+<page-header [title]="null" [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <div nz-row>
+      <nz-col nzSpan="16">
+        <nz-breadcrumb>
+          <nz-breadcrumb-item>
+            <a [routerLink]="['/']">{{'home'|translate}}</a>
+          </nz-breadcrumb-item>
+          <nz-breadcrumb-item>{{'basic-form.basic'|translate}}</nz-breadcrumb-item>
+        </nz-breadcrumb>
+      </nz-col>
+      <nz-col nzSpan="8" style="text-align: right;">
+        <button nz-button nzType="dashed" nzSize="small" nz-tooltip nzTitle="{{'close'|translate}}" nzPlacement="bottom" (click)="close()">
+          <i nz-icon type="close" theme="outline"></i>
+        </button>
+        <button nz-button nzType="dashed" nzSize="small" nz-tooltip nzTitle="{{'back'|translate}}" nzPlacement="bottom" (click)="goToPrevious()">
+          <i nz-icon type="arrow-left" theme="outline"></i>
+        </button>
+        <button nz-button nzType="dashed" nzSize="small" nz-tooltip nzTitle="{{'reload'|translate}}" nzPlacement="bottom" (click)="loadPage()">
+          <i nz-icon type="reload" theme="outline"></i>
+        </button>
+      </nz-col>
+    </div>
+  </ng-template>
+</page-header>
+<nz-card>
+  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
+  <st #st [data]="url" [columns]="columns"></st>
+</nz-card>

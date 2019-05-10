@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <div class="modal-title">{{'create'|translate}}</div>
+</div>
+<nz-spin [nzSpinning]="loading">
+  <sf #sf mode="edit" [schema]="dataProcessorSchema" [ui]="dataProcessorUI" [formData]="dataProcessor" class="compact-form" button="none">
+    <div class="modal-footer">
+      <button nz-button type="button" (click)="close()">关闭</button>
+      <button nz-button type="button" (click)="sf.reset()">重置</button>
+      <button nz-button type="submit" nzType="primary" (click)="save(sf.value)" [disabled]="!sf.valid">保存</button>
+    </div>
+  </sf>
+</nz-spin>

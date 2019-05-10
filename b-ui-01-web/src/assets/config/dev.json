@@ -20,33 +20,44 @@
           "icon": "anticon anticon-dashboard"
         },
         {
-          "i18n": "ambari-admin",
+          "i18n":"detail-form",
           "icon": "anticon anticon-appstore",
-          "target": "_blank",
-          "externalLink": "http://s1.hdp.com:8080/"
-        },
-        {
-          "i18n": "nifi-admin",
-          "icon": "anticon anticon-appstore",
-          "target": "_blank",
-          "externalLink": "http://s1.hdp.com:9090/nifi"
-        },
-        {
-          "i18n": "kylin-admin",
-          "icon": "anticon anticon-appstore",
-          "target": "_blank",
-          "externalLink": "http://s4.hdp.com:7070/kylin"
-        },
-        {
-          "i18n": "hdp-log-admin",
-          "icon": "anticon anticon-appstore",
-          "target": "_blank",
-          "externalLink": "http://s1.hdp.com:61888/"
+          "link":"/detail-form/form-item"
         },
         {
           "i18n": "data-processor",
           "icon": "anticon anticon-appstore",
           "link": "/data-processor/list"
+        },
+        {
+          "i18n":"advanced-form",
+          "icon": "anticon anticon-appstore",
+          "link":"/advanced-form/list"
+        },
+        {
+          "i18n":"basic-form",
+          "icon": "anticon anticon-appstore",
+          "link":"/basic-form/basic"
+        },
+        {
+          "i18n":"detail-page",
+          "icon": "anticon anticon-appstore",
+          "link":"/detail-page/detail"
+        },
+        {
+          "i18n":"expand-form",
+          "icon": "anticon anticon-appstore",
+          "link":"/expand-form/expand"
+        },
+        {
+          "i18n":"feedback",
+          "icon": "anticon anticon-appstore",
+          "link":"/feedback/problem-feedback"
+        },
+        {
+          "i18n":"personal-center",
+          "icon": "anticon anticon-appstore",
+          "link":"/personal-center/personal-data"
         }
       ]
     }

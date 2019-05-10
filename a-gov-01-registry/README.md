@@ -1,0 +1,2 @@
+# dev profile
+java -jar jhipster-registry-4.0.0.war -Xms500m -Xmx500m --security.user.password=admin --jhipster.security.authentication.jwt.secret=qwer1234 --spring.cloud.config.server.native.search-locations=file:./central-config

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DelonChartModule } from '@delon/chart';
 // delon
 import { AlainThemeModule } from '@delon/theme';
 import { DelonABCModule } from '@delon/abc';
@@ -18,7 +19,8 @@ import { BasePageComponent } from './base-page/base-page.component';
 
 const THIRDMODULES = [
   NgZorroAntdModule,
-  CountdownModule
+  CountdownModule,
+
 ];
 // #endregion
 
@@ -37,6 +39,7 @@ const DIRECTIVES = [];
     DelonABCModule,
     DelonACLModule,
     DelonFormModule,
+    DelonChartModule,
     // third libs
     ...THIRDMODULES
   ],
@@ -54,6 +57,7 @@ const DIRECTIVES = [];
     DelonABCModule,
     DelonACLModule,
     DelonFormModule,
+    DelonChartModule,
     // i18n
     TranslateModule,
     // third libs

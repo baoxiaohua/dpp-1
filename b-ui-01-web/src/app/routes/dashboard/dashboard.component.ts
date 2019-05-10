@@ -22,7 +22,10 @@ import { LayoutService } from 'app/service/layout.service';
 })
 export class DashboardComponent extends BasePageComponent
   implements OnInit, BasePageInterface {
-
+  salesData: any[] = new Array(12).fill({}).map((_i, idx) => ({
+    x: `${idx + 1}月`,
+    y: Math.floor(Math.random() * 1000) + 3,
+  }));
     code = '';
     cmOptions: any = {
       lineNumbers: true,

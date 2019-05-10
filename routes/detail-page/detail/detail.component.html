@@ -1,0 +1,114 @@
+<page-header [title]="'项目名称：XXXX项目'" [logo]="logo" [action]="action" [extra]="extra" [tab]="tab">
+  <ng-template #logo>
+    <img src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png">
+  </ng-template>
+  <ng-template #action>
+    <nz-button-group>
+      <button nz-button>操作</button>
+      <button nz-button>操作</button>
+    </nz-button-group>
+    <nz-dropdown class="mx-sm">
+      <button nz-button nz-dropdown>
+        <i nz-icon type="ellipsis"></i>
+      </button>
+    </nz-dropdown>
+    <button nz-button [nzType]="'primary'">主操作</button>
+  </ng-template>
+  <ng-template #extra>
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="12">
+        <p class="text-grey">状态</p>
+        <p class="text-lg">待审批</p>
+      </div>
+    </div>
+  </ng-template>
+  <sv-container size="small" col="2">
+    <sv label="项目经理">曲丽丽</sv>
+    <sv label="项目编号">XX 服务</sv>
+    <sv label="创建时间">2017-07-07</sv>
+    <sv label="是否符合">
+      <a (click)="msg.success('yes')">正常</a>
+    </sv>
+    <sv label="结束日期">2017-07-07 ~ 2017-08-08</sv>
+    <sv label="备注">请确认完成时间</sv>
+  </sv-container>
+</page-header>
+<nz-card [nzBordered]="false" class="mb-lg" nzTitle="项目进度">
+  <nz-steps [nzCurrent]="1" nzProgressDot>
+    <nz-step [nzTitle]="'创建项目'" [nzDescription]="createDesc">
+      <ng-template #createDesc>
+        <div class="desc">
+          <div class="my-sm">
+            曲丽丽
+            <i nz-icon type="dingding" class="ml-sm"></i>
+          </div>
+          <div>2017-12-12 12:32</div>
+        </div>
+      </ng-template>
+    </nz-step>
+    <nz-step [nzTitle]="'项目初审'" [nzDescription]="checkedDesc">
+      <ng-template #checkedDesc>
+        <div class="desc">
+          <div class="my-sm">
+            周毛毛
+            <i nz-icon type="dingding" class="ml-sm" style="color: #00a0e9;"></i>
+          </div>
+          <a (click)="msg.success('click')">提醒审核</a>
+        </div>
+      </ng-template>
+    </nz-step>
+    <nz-step [nzTitle]="'部门复核'"></nz-step>
+    <nz-step [nzTitle]="'完成'"></nz-step>
+  </nz-steps>
+  <div class="steps-content"></div>
+</nz-card>
+<nz-card [nzBordered]="false" nzTitle="部门信息" class="mb-lg">
+  <sv-container class="mb-lg">
+    <sv label="部门经理">小小库</sv>
+    <sv label="部门代号">0312</sv>
+    <sv label="部门属性">产品研发</sv>
+    <sv label="联系方式">18112345678</sv>
+    <sv label="联系地址">天津西青区XXX路XX号</sv>
+  </sv-container>
+
+  <nz-card nzType="inner" nzTitle="项目成员">
+    <sv-container size="small" title="组名称">
+      <sv label="负责人">王维维</sv>
+      <sv label="角色码">1234567</sv>
+      <sv label="所属部门">研发部</sv>
+      <sv label="入职时间">2017-08-08</sv>
+      <sv label="职责">产品研发</sv>
+    </sv-container>
+    <nz-divider></nz-divider>
+    <sv-container size="small" title="组名称">
+      <sv label="负责人">王维维</sv>
+      <sv label="角色码">1234567</sv>
+      <sv label="所属部门">销售部</sv>
+      <sv label="入职时间">2017-08-08</sv>
+      <sv label="职责">产品销售</sv>
+    </sv-container>
+    <nz-divider></nz-divider>
+    <sv-container size="small" title="组名称">
+      <sv label="负责人">王维维</sv>
+      <sv label="角色码">1234567</sv>
+      <sv label="所属部门">项目部</sv>
+      <sv label="入职时间">2017-08-08</sv>
+      <sv label="职责">产品经理</sv>
+    </sv-container>
+  </nz-card>
+</nz-card>
+<nz-card [nzBordered]="false">
+  <nz-card-tab>
+    <nz-tabset nzSize="large" (nzSelectChange)="change($event)">
+      <nz-tab nzTitle="操作日志一"></nz-tab>
+      <nz-tab nzTitle="操作日志二"></nz-tab>
+      <nz-tab nzTitle="操作日志三"></nz-tab>
+    </nz-tabset>
+  </nz-card-tab>
+  <st [columns]="opColumns" [data]="list">
+    <ng-template st-row="status" let-i>
+      <nz-badge *ngIf="i.status === 'success'" [nzStatus]="'success'" [nzText]="'成功'"></nz-badge>
+      <nz-badge *ngIf="i.status !== 'success'" [nzStatus]="'processing'" [nzText]="'进行中'"></nz-badge>
+    </ng-template>
+  </st>
+</nz-card>

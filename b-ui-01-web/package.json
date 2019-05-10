@@ -1,6 +1,7 @@
 {
   "name": "demo2",
   "version": "0.0.0",
+  "main": "index.js",
   "scripts": {
     "ng": "ng",
     "start": "npm run color-less && ng serve -o",
@@ -18,8 +19,15 @@
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "hmr": "ng serve -c=hmr"
   },
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "huangxiaoyan",
+  "license": "ISC",
   "private": true,
   "dependencies": {
+    "del": "^2.2.0",
+    "yeoman-generator": "^0.23.3",
     "@angular/animations": "^6.1.10",
     "@angular/common": "^6.1.10",
     "@angular/compiler": "^6.1.10",
@@ -58,7 +66,10 @@
     "stylelint-config-standard": "^18.2.0",
     "tslint-config-prettier": "^1.12.0",
     "tslint-language-service": "^0.9.9",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "@antv/data-set": "^0.8.8",
+    "@antv/g2": "^3.0.11",
+    "@antv/g2-plugin-slider": "^2.0.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.2",
